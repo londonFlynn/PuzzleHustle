@@ -24,9 +24,8 @@ public abstract class Puzzle implements Serializable {
 	public void delete() {
 		
 	}
-	public void run() {
-		
-	}
+	public abstract void run();
+	
 	public void exit() {
 		
 	}
