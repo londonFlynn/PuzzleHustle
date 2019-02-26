@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 
 import enums.PuzzleType;
+import javafx.scene.Scene;
 
 public abstract class Puzzle implements Serializable {
 
@@ -24,7 +25,7 @@ public abstract class Puzzle implements Serializable {
 	public void delete() {
 		
 	}
-	public abstract void run();
+	public abstract Scene getScene();
 	
 	public void exit() {
 		
