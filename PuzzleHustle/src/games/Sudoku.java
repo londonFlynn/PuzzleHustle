@@ -2,9 +2,9 @@ package games;
 
 import java.util.ArrayList;
 
-import controllers.Puzzle;
-import controllers.PuzzleType;
-import controllers.User;
+import enums.PuzzleType;
+import models.Puzzle;
+import models.User;
 
 public class Sudoku extends Puzzle{
 	private int[][][][] board;
@@ -46,6 +46,11 @@ public class Sudoku extends Puzzle{
 
 	@Override
 	public void showInstructions() {
+		
+	}
+
+	@Override
+	public void run() {
 		
 	}
 
