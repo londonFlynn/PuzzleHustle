@@ -74,7 +74,7 @@ public abstract class Puzzle implements Serializable {
 	public PuzzleType getPUZZLE_TYPE() {
 		return PUZZLE_TYPE;
 	}
-	
+	protected abstract void setupPuzzlePane();
 	
 	
 
