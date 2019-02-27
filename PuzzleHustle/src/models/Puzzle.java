@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 
 public abstract class Puzzle implements Serializable {
 
-	private Scene scene;
+	protected Scene scene;
 	private static final long serialVersionUID = 1L;
 	private double timeSpent = 0;
 	private float score = 0;
