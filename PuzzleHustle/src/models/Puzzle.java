@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import enums.PuzzleType;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 
 public abstract class Puzzle implements Serializable {
 
+	protected BorderPane puzzlePane = new BorderPane();
 	protected Scene scene;
 	private static final long serialVersionUID = 1L;
 	private double timeSpent = 0;
@@ -26,7 +28,10 @@ public abstract class Puzzle implements Serializable {
 	public void delete() {
 		
 	}
-	public abstract Scene getScene();
+	public Scene getScene() {
+		
+		return null;
+	}
 	
 	public void exit() {
 		
