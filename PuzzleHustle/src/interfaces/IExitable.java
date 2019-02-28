@@ -2,8 +2,8 @@ package interfaces;
 
 public interface IExitable {
 	
-	public void suscribe(SubscribesToExitable subscriber);
-	public void unSuscribe(SubscribesToExitable subscriber);
+	public void exitSubcribe(SubscribesToExitable subscriber);
+	public void exitUnSubcribe(SubscribesToExitable subscriber);
 	public void exit();
 
 }

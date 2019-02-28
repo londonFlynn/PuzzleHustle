@@ -2,8 +2,8 @@ package interfaces;
 
 public interface NewPuzzlePublisher {
 	
-	public void suscribe(NewPuzzleSubscriber subscriber);
-	public void unSuscribe(NewPuzzleSubscriber subscriber);
+	public void subcribe(NewPuzzleSubscriber subscriber);
+	public void unSubcribe(NewPuzzleSubscriber subscriber);
 	public void newPuzzle();
 
 }
