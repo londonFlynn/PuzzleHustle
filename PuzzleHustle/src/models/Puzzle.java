@@ -5,6 +5,7 @@ import java.io.Serializable;
 import enums.PuzzleType;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import views.Display;
 
 public abstract class Puzzle implements Serializable {
 
@@ -17,6 +18,8 @@ public abstract class Puzzle implements Serializable {
 	private String filePath;
 	public final PuzzleType PUZZLE_TYPE;
 	private User user;
+	private Display display;
+	
 	public Puzzle(String filePath, PuzzleType PUZZLE_TYPE, User user) {
 		setFilePath(filePath);
 		this.PUZZLE_TYPE = PUZZLE_TYPE;
@@ -29,8 +32,8 @@ public abstract class Puzzle implements Serializable {
 		
 	}
 	public Scene getScene() {
-		
-		return null;
+		this.scene = display.getScene();
+		return scene;
 	}
 	
 	public void exit() {
