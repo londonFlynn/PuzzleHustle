@@ -29,7 +29,10 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	private User user;
 	protected Display display = new Display();
 	private boolean instructionsMode = true;
+	private Label scoreLabel = new Label("Score: " +Float.toString(getScore()));
+	
 	private ArrayList<SubscribesToExitable> exitSubscribers = new ArrayList<>();
+	
 	private ArrayList<NewPuzzleSubscriber> puzzleSubscribers = new ArrayList<>();
 	
 	public Puzzle(String filePath, PuzzleType PUZZLE_TYPE, User user) {
@@ -41,7 +44,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		display.getNavigation().getChildren().add(exitButton());
 		display.getNavigation().getChildren().add(newPuzzleButton());
 		display.getRightSidebar().getChildren().add(new Label("Time: " +Double.toString(getTimeSpent())));
-		display.getRightSidebar().getChildren().add(new Label("Score: " +Float.toString(getScore())));
+		display.getRightSidebar().getChildren().add(scoreLabel);
 		display.getRightSidebar().getChildren().add(new Label("User: " + getUser().getName()));
 		display.getRightSidebar().getChildren().add(new Label("High Score: "+ user.getHighScore(PUZZLE_TYPE)));
 		display.getRightSidebar().getChildren().add(new Label("Total Plays: "+ user.getTotalPlays(PUZZLE_TYPE)));
@@ -117,12 +120,14 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		});
 		return exit;
 	}
+	
 	@Override
 	public void exit() {
 		for (SubscribesToExitable subscriber : exitSubscribers) {
 			subscriber.menuExited();
 		}
 	}
+	
 	private Button newPuzzleButton() {
 		Button newPuzzle = new Button("New Puzzle");
 		newPuzzle.setMinSize(100, 40);
@@ -171,7 +176,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	}
 	public void setScore(float score) {
 		this.score = score;
-		display.getRightSidebar().getChildren().add(new Label("Score: " +Float.toString(getScore())));
+		scoreLabel = new Label("Score: " + getScore());
 	}
 	public boolean isSolved() {
 		return solved;
