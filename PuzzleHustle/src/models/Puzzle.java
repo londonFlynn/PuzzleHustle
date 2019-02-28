@@ -18,7 +18,7 @@ public abstract class Puzzle implements Serializable {
 	private String filePath;
 	public final PuzzleType PUZZLE_TYPE;
 	private User user;
-	private Display display;
+	private Display display = new Display();
 	
 	public Puzzle(String filePath, PuzzleType PUZZLE_TYPE, User user) {
 		setFilePath(filePath);
