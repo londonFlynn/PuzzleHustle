@@ -1,8 +1,8 @@
 package views;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -10,7 +10,7 @@ public class Display {
 	
 	private VBox root = new VBox();
 	
-	private Label name = new Label();
+	private VBox name = new VBox();
 	
 	private HBox navigation = new HBox();
 	
@@ -30,6 +30,8 @@ public class Display {
 
 	
 	public Display() {
+		name.setAlignment(Pos.CENTER);
+		
 		root.setPadding(new Insets(20, 0, 20, 0));
 		root.setMinSize(width, height/6);
 		
@@ -38,6 +40,7 @@ public class Display {
 		
 		navigation.setPadding(new Insets(20, 20, 20, 20));
 		navigation.setMinSize(width, height/12 +2);
+		navigation.setAlignment(Pos.CENTER);
 		
 		leftSidebar.setPadding(new Insets(30, 30, 30, 30));
 		leftSidebar.setMinSize(width/6, height * 4/6 + 20);
@@ -59,11 +62,11 @@ public class Display {
 		this.root = root;
 	}
 
-	public Label getName() {
+	public VBox getName() {
 		return name;
 	}
 
-	public void setName(Label name) {
+	public void setName(VBox name) {
 		this.name = name;
 	}
 
