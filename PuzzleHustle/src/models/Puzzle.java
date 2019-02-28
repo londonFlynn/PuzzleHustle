@@ -177,7 +177,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	}
 	public void setScore(float score) {
 		this.score = score;
-		scoreLabel = new Label("Score: " + getScore());
+		scoreLabel.textProperty().set("Score: " + getScore());
 	}
 	public boolean isSolved() {
 		return solved;
