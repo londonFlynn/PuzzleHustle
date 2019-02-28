@@ -3,7 +3,6 @@ package views;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -19,7 +18,7 @@ public class Display {
 	
 	private VBox rightSidebar = new VBox();
 	
-	private BorderPane mainView = new BorderPane();
+	private VBox mainView = new VBox();
 	
 	private HBox mainCollection = new HBox();
 	
@@ -92,11 +91,11 @@ public class Display {
 		this.rightSidebar = rightSidebar;
 	}
 
-	public BorderPane getMainView() {
+	public VBox getMainView() {
 		return mainView;
 	}
 
-	public void setMainView(BorderPane mainView) {
+	public void setMainView(VBox mainView) {
 		this.mainView = mainView;
 	}
 
