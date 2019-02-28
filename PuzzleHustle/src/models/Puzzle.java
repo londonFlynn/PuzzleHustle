@@ -33,6 +33,7 @@ public abstract class Puzzle implements Serializable {
 	}
 	public Scene getScene() {
 		this.scene = display.getScene();
+		this.puzzlePane = display.getMainView();
 		return scene;
 	}
 	
