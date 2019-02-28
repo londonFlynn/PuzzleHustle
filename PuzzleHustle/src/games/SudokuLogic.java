@@ -1,10 +1,12 @@
 package games;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class SudokuLogic {
+public class SudokuLogic implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	public final int CELL_LENGTH;
 	// row, column; row, column
 	private int[][][][] board;
@@ -12,7 +14,7 @@ public class SudokuLogic {
 	private int[][][][] solution;
 	public final int CELL_LENGTH_SQUARED;
 
-	public SudokuLogic(int cellLength) {
+	SudokuLogic(int cellLength) {
 		if (cellLength > 4 || cellLength < 2) {
 			throw new IllegalArgumentException(
 					"The board size must be no less than 1 and no greater than 4. You input " + cellLength);
@@ -26,11 +28,11 @@ public class SudokuLogic {
 		board[rowIn][columnIn][row][column] = newNumber;
 	}
 
-	private int getCellValue(int rowIn, int columnIn, int row, int column) {
+	int getCellValue(int rowIn, int columnIn, int row, int column) {
 		return board[rowIn][columnIn][row][column];
 	}
-
-	public int[][][][] getPuzzle() {
+	
+	int[][][][] getPuzzle() {
 		int[][][][] currentState = new int[CELL_LENGTH][CELL_LENGTH][CELL_LENGTH][CELL_LENGTH];
 		for (int i = 0; i < CELL_LENGTH; i++) {
 			for (int j = 0; j < CELL_LENGTH; j++) {
@@ -43,7 +45,7 @@ public class SudokuLogic {
 		}
 		return currentState;
 	}
-	public int[][][][] getSolution() {
+	int[][][][] getSolution() {
 		int[][][][] currentState = new int[CELL_LENGTH][CELL_LENGTH][CELL_LENGTH][CELL_LENGTH];
 		for (int i = 0; i < CELL_LENGTH; i++) {
 			for (int j = 0; j < CELL_LENGTH; j++) {
@@ -124,7 +126,7 @@ public class SudokuLogic {
 		}
 	}
 
-	public int[][][][] generatePuzzle() {
+	int[][][][] generatePuzzle() {
 		int pruneAttempts = 22 - (CELL_LENGTH*CELL_LENGTH+CELL_LENGTH);
 		randomSolvedBoard();
 		solution = getPuzzle();
@@ -154,7 +156,7 @@ public class SudokuLogic {
 		changeNumber(lastValue, lastIndexes[0], lastIndexes[1], lastIndexes[2], lastIndexes[3]);
 	}
 	
-	public static boolean isSolved(int[][][][] board) {
+	static boolean isSolved(int[][][][] board) {
 		boolean solved = true;
 		for (int i = 0; i < board.length && solved; i++) {
 			for (int j = 0; j < board.length && solved; j++) {
@@ -270,7 +272,7 @@ public class SudokuLogic {
 
 	// for each row of cells, for each row in the cell, check each column of cells,
 	// check each column in cell
-	public static boolean isValid(int[][][][] board) {
+	static boolean isValid(int[][][][] board) {
 		boolean valid = true;
 		for (int i = 0; i < board.length && valid; i++) {
 			for (int j = 0; j < board.length && valid; j++) {
@@ -298,7 +300,7 @@ public class SudokuLogic {
 		return valid;
 	}
 
-	public static boolean cellIsValid(int[][][][] board, int rowIn, int columnIn, int row, int column) {
+	static boolean cellIsValid(int[][][][] board, int rowIn, int columnIn, int row, int column) {
 		boolean valid = true;
 		for (int i = 0; i < board.length && valid; i++) {
 			for (int j = 0; j < board.length && valid; j++) {
