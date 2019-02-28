@@ -103,6 +103,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	}
 	public void delete() {
 		lib.FileIO.delete(getFilePath());
+		exit();
 	}
 	public Scene getScene() {
 		this.scene = display.getScene();
