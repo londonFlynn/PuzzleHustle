@@ -31,7 +31,7 @@ public class Display {
 	
 	public Display() {
 		name.setAlignment(Pos.CENTER);
-		
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		root.setPadding(new Insets(20, 0, 20, 0));
 		root.setMinSize(width, height/6);
 		
