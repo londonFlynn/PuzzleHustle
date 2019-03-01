@@ -10,6 +10,7 @@ import interfaces.NewPuzzleSubscriber;
 import interfaces.SubscribesToExitable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,12 +44,29 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		display.getName().getChildren().add(getPuzzleName());
 		display.getNavigation().getChildren().add(exitButton());
 		display.getNavigation().getChildren().add(newPuzzleButton());
-		display.getRightSidebar().getChildren().add(new Label("Time: " +Double.toString(getTimeSpent())));
+		Label timeLabel = new Label("Time: " +Double.toString(getTimeSpent()));
+		timeLabel.getStyleClass().add("gameStats");
+		display.getRightSidebar().getChildren().add(timeLabel);
 		display.getRightSidebar().getChildren().add(scoreLabel);
-		display.getRightSidebar().getChildren().add(new Label("User: " + getUser().getName()));
-		display.getRightSidebar().getChildren().add(new Label("High Score: "+ user.getHighScore(PUZZLE_TYPE)));
-		display.getRightSidebar().getChildren().add(new Label("Total Plays: "+ user.getTotalPlays(PUZZLE_TYPE)));
-		display.getRightSidebar().getChildren().add(new Label("Total Wins: "+ user.getTotalWins(PUZZLE_TYPE)));
+		Label userLabel = new Label("User: " + getUser().getName());
+		userLabel.getStyleClass().add("gameStats");
+		display.getRightSidebar().getChildren().add(userLabel);
+		Label highScoreLabel = new Label("High Score: "+ user.getHighScore(PUZZLE_TYPE));
+		highScoreLabel.getStyleClass().add("gameStats");
+		display.getRightSidebar().getChildren().add(highScoreLabel);
+		Label totalPlaysLabel = new Label("Total Plays: "+ user.getTotalPlays(PUZZLE_TYPE));
+		totalPlaysLabel.getStyleClass().add("gameStats");
+		display.getRightSidebar().getChildren().add(totalPlaysLabel);
+		Label totalWinsLabel = new Label("Total Wins: "+ user.getTotalWins(PUZZLE_TYPE));
+		totalWinsLabel.getStyleClass().add("gameStats");
+		display.getRightSidebar().getChildren().add(totalWinsLabel);
+		scoreLabel.getStyleClass().add("gameStats");
+		timeLabel.setAlignment(Pos.CENTER);
+		userLabel.setAlignment(Pos.CENTER);
+		highScoreLabel.setAlignment(Pos.CENTER);
+		totalPlaysLabel.setAlignment(Pos.CENTER);
+		totalWinsLabel.setAlignment(Pos.CENTER);
+		scoreLabel.setAlignment(Pos.CENTER);
 	}
 	private Button saveButton() {
 		Button save = new Button("Save");
@@ -83,7 +101,10 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		default:
 			name = "Name error";
 		}
-		return new Label(name);
+		Label nameLabel = new Label(name);
+		nameLabel.getStyleClass().add("nameLabel");
+		nameLabel.setAlignment(Pos.CENTER);
+		return nameLabel;
 		
 	}
 	
