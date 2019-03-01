@@ -11,15 +11,16 @@ public class Tile {
 	private String valueStr;
 	private String color = "-fx-background-color: #fff;";
 	private String fontSize = "-fx-font-size: 50px;";
-	private String fontWeight = "-fx-font-weight: bold;";
+	private String fontWeight = "-fx-font-weight: bold;" + "-fx-border-radius: 10 10 10 10;"
+  	+"-fx-background-radius: 10 10 10 10;";
 	private HashMap <String, String> colorMap;
 	
 	public Tile() {
 		valueStr = "";
 		label = new Label(valueStr);
-		label.setMinSize(140, 140);
+		label.setMinSize(120, 120);
 		label.setAlignment(Pos.CENTER);
-		label.setStyle(color + fontSize + fontWeight);
+		label.setStyle(color + fontSize + fontWeight + "-fx-text-fill: #fff;");
 		colorMap = initColorMap();
 	}
 	public Label getLabel() {
