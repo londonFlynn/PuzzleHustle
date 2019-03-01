@@ -7,21 +7,19 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import models.Puzzle;
 import models.User;
 
 //NewPuzzlePublisher, Serializable, IExitable
+@SuppressWarnings("serial")
 public class MasterMind extends Puzzle implements ISolveable {
-	public MasterMind(String filePath, PuzzleType PUZZLE_TYPE, User user) {
-		super(filePath, PUZZLE_TYPE, user);
+	public MasterMind(String filePath, User user) {
+		super(filePath, PuzzleType.MASTERMIND, user);
 	}
 
 	private MMLogic gameLogic = new MMLogic();
@@ -30,22 +28,23 @@ public class MasterMind extends Puzzle implements ISolveable {
 	private Rectangle[] squares = new Rectangle[6];
 	private double orgSceneX, orgSceneY;
 	private Pane masterMind = null;
-	private ImageView garbage = null;
+	private Text stats;
+	private Button giveUp = new Button("Give Up");
+	private boolean isDone = false;
 
 	private void drawStats() {
-		GridPane stats = new GridPane();
-		Text text = new Text("Correct Color, Wrong Space: " + gameLogic.getRightColors());
-		Text text2 = new Text("Correct Color, Right Space: " + gameLogic.getRightSpots());
-		stats.add(text, 0, 0);
-		stats.add(text2, 0, 1);
-		masterMind.getChildren().add(stats);
-		stats.setLayoutX(50);
-		stats.setLayoutY(600);
+		stats = new Text("Correct Color, Wrong Space: " + gameLogic.getRightColors() + "\nCorrect Color, Right Space: "
+				+ gameLogic.getRightSpots() + "\nGuesses Remaining: " + gameLogic.getGuessesLeft());
+		stats.setX(10);
+		stats.setY(20);
+		stats.setId("stats");
 	}
 
 	private void resetStage(Boolean drawSquares) {
 		masterMind.getChildren().clear();
+		display.getLeftSidebar().getChildren().remove(giveUp);
 		drawResetButton();
+		drawGiveUpButton();
 		drawSubmitButton();
 		drawCircles();
 		drawStats();
@@ -53,18 +52,27 @@ public class MasterMind extends Puzzle implements ISolveable {
 			drawSquares();
 		}
 		drawStats();
+		masterMind.getChildren().add(stats);
 		masterMind.getChildren().addAll(circles);
 		masterMind.getChildren().addAll(squares);
 	}
 
+	private void drawGiveUpButton() {
+		giveUp.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				showSolution();
+				isDone = true;
+			}
+		});
+		display.getLeftSidebar().getChildren().add(giveUp);
+	}
+
 	private void drawResetButton() {
 		Button reset = new Button("Reset");
-		reset.setMinHeight(30);
-		reset.setMinWidth(50);
-		reset.setMaxHeight(30);
-		reset.setMaxWidth(50);
-		reset.setLayoutX(475);
-		reset.setLayoutY(500);
+		reset.setId("resetButton");
+		reset.setLayoutX(445);
+		reset.setLayoutY(460);
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -74,35 +82,41 @@ public class MasterMind extends Puzzle implements ISolveable {
 		masterMind.getChildren().add(reset);
 	}
 
-	private void drawSubmitButton() {
+	private void checkSubmission() {
 		Text errorMessage = new Text("You have to color all squares before submitting.");
-		errorMessage.setX(375);
-		errorMessage.setY(450);
+		masterMind.getChildren().add(errorMessage);
+		errorMessage.setVisible(false);
+		errorMessage.setId("message");
+		errorMessage.setX(340);
+		errorMessage.setY(250);
+		gameLogic.checkGuess(squares);
+		if (gameLogic.canCheck()) {
+			if (gameLogic.checkIfWon(squares)) {
+				setSolved(true);
+			} else {
+				resetStage(false);
+			}
+		} else {
+			errorMessage.setVisible(true);
+		}
+	}
+
+	private void drawSubmitButton() {
 		Button submit = new Button("Check Guess");
-		submit.setMinHeight(30);
-		submit.setMinWidth(100);
-		submit.setMaxHeight(30);
-		submit.setMaxWidth(50);
-		submit.setLayoutX(475);
-		submit.setLayoutY(600);
+		submit.setId("submitButton");
+		submit.setLayoutX(405);
+		submit.setLayoutY(400);
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (gameLogic.checkGuess(squares)) {
-					resetStage(false);
-				} else {
-					System.out.println("Failed");
-					errorMessage.setVisible(true);
-				}
+				checkSubmission();
 			}
 		});
-		masterMind.getChildren().add(errorMessage);
-		errorMessage.setVisible(false);
 		masterMind.getChildren().add(submit);
 	}
 
 	private void drawOneCircle(Circle circle) {
-		int x = 375;
+		int x = 355;
 		if (circle.getFill() == Color.BLUE) {
 			x += 50;
 		} else if (circle.getFill() == Color.ORANGE) {
@@ -138,27 +152,20 @@ public class MasterMind extends Puzzle implements ISolveable {
 			orgSceneY = t.getSceneY();
 		});
 		circle2.setOnMouseReleased((t) -> {
-			if (circle2.getBoundsInParent().intersects(garbage.getBoundsInParent())) {
-				masterMind.getChildren().remove(circle2);
-				System.out.println("Removed");
-				Circle c = (Circle) (t.getSource());
-				drawOneCircle(c);
-			} else {
-				for (Rectangle r : squares) {
-					if (r.getBoundsInParent().intersects(circle2.getBoundsInParent())) {
-						r.setFill(circle2.getFill());
-						masterMind.getChildren().remove(circle2);
-						System.out.println("Colored");
-						Circle c = (Circle) (t.getSource());
-						drawOneCircle(c);
-					}
+			for (Rectangle r : squares) {
+				if (r.getBoundsInParent().intersects(circle2.getBoundsInParent())) {
+					r.setFill(circle2.getFill());
+					masterMind.getChildren().remove(circle2);
+					System.out.println("Colored");
+					Circle c = (Circle) (t.getSource());
+					drawOneCircle(c);
 				}
 			}
 		});
 	}
 
 	private void drawCircles() {
-		int xPos = 375;
+		int xPos = 355;
 		for (int i = 0; i < circles.length; i++) {
 			Circle circle = new Circle(xPos, 350, 20, colors[i]);
 			circle.setCursor(Cursor.HAND);
@@ -197,7 +204,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 	}
 
 	private void drawSquares() {
-		int xPos = 220;
+		int xPos = 200;
 		for (int i = 0; i < circles.length; i++) {
 			Rectangle r = new Rectangle(xPos, 100, 60, 60);
 			r.setFill(Color.BLACK);
@@ -208,14 +215,28 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	@Override
 	public void showInstructions() {
-		// TODO Auto-generated method stub
-
+		masterMind.getChildren().clear();
+		Text instructions = new Text("Drag the colored circles to the squares to color them. After "
+				+ "coloring all of the squares, you can check your guess. The "
+				+ "top left corner\nof the screen will tell how many colors are "
+				+ "both correct and in the correct square, and will also tell"
+				+ " you how many colors are correct\nbut in the incorrect square."
+				+ "\n\nYou get 20 guesses to figure out which colors go in which "
+				+ "square to match the secret pattern.");
+		instructions.setId("instructions");
+		instructions.setY(100);
+		instructions.setX(10);
+		masterMind.getChildren().add(instructions);
 	}
 
 	@Override
 	public void hideInstructions() {
-		// TODO Auto-generated method stub
-
+		if (!isDone) {
+			masterMind.getChildren().clear();
+			resetStage(true);
+		} else {
+			showSolution();
+		}
 	}
 
 	@Override
@@ -223,15 +244,20 @@ public class MasterMind extends Puzzle implements ISolveable {
 		masterMind = new Pane();
 		resetStage(true);
 		drawStats();
-//		scene.getStylesheets().add("/masterMind/application.css");
 		gameLogic.createPuzzle();
 		puzzlePane.getChildren().add(masterMind);
+		puzzlePane.getStylesheets().add("application/MM.css");
 	}
 
 	@Override
 	public void showSolution() {
-		// TODO Auto-generated method stub
-
+		masterMind.getChildren().clear();
+		drawSquares();
+		Color[] answer = gameLogic.getAnswer();
+		for (int i = 0; i < squares.length; i++) {
+			squares[i].setFill(answer[i]);
+		}
+		masterMind.getChildren().addAll(squares);
 	}
 
 	@Override
@@ -242,13 +268,4 @@ public class MasterMind extends Puzzle implements ISolveable {
 		}
 		return scene;
 	}
-
-//	@Override
-//	public void handle(ActionEvent arg0) {
-//		//toggle boolean
-//		isOn = !isOn;
-//		
-//		//based on boolean, change label style
-//		bulb.setStyle(isOn ? ON : OFF);
-//	}
 }
