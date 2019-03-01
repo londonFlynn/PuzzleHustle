@@ -1,1 +1,19 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.nameLabel{
+	-fx-font-size: 50pt;
+	-fx-font-wight: bold;
+	-fx-text-fill: #00a5f0;
+}
+.root{
+	-fx-background-color: #555;
+}
+.button{
+	-fx-font-size: 10pt;
+	-fx-font-wight: bold;
+	-fx-background-color: #00a5f0;
+	-fx-text-fill: #fff;
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-min-height: 70px;
+    -fx-min-width: 150px;
+}
