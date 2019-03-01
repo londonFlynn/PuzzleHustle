@@ -3,11 +3,14 @@ package games;
 import java.util.Random;
 
 import enums.PuzzleType;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 import models.Puzzle;
 import models.User;
 
@@ -364,6 +367,12 @@ public class TwentyFourtyEight extends Puzzle {
 				if (tiles[x][y].getValue() != 0) {
 					isTaken = true;
 				} else {
+					ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[x][y].getLabel());
+					transition.setFromX(.7);
+					transition.setFromY(.7);
+					transition.setToX(1);
+					transition.setToY(1);
+					transition.play();
 					tiles[x][y].setValue(num);
 					isTaken = false;
 				}
