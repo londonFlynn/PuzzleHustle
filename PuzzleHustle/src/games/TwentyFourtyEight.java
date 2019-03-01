@@ -1,10 +1,10 @@
 package games;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import enums.PuzzleType;
 import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -150,6 +150,10 @@ public class TwentyFourtyEight extends Puzzle {
 							tArr[i - 1].setValue(tArr[i - 1].getValue() + tArr[i].getValue());
 							tArr[i].setValue(0);
 							addScore(tArr[i - 1].getValue() + tArr[i].getValue());
+							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tArr[i-1].getLabel());
+							transition.setFromY(.7);
+							transition.setToY(1);
+							transition.play();
 							fillUp();
 						} else if (tArr[i - 1].getValue() == 0) {
 							tArr[i - 1].setValue(tArr[i].getValue());
@@ -178,6 +182,10 @@ public class TwentyFourtyEight extends Puzzle {
 							tArr[i + 1].setValue(tArr[i + 1].getValue() + tArr[i].getValue());
 							tArr[i].setValue(0);
 							addScore(tArr[i + 1].getValue() + tArr[i].getValue());
+							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tArr[i+1].getLabel());
+							transition.setFromY(.7);
+							transition.setToY(1);
+							transition.play();
 							fillDown();
 						} else if (tArr[i + 1].getValue() == 0) {
 							tArr[i + 1].setValue(tArr[i].getValue());
@@ -206,6 +214,10 @@ public class TwentyFourtyEight extends Puzzle {
 							tiles[j - 1][i].setValue(tiles[j - 1][i].getValue() + tiles[j][i].getValue());
 							tiles[j][i].setValue(0);
 							addScore(tiles[j - 1][i].getValue() + tiles[j][i].getValue());
+							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j-1][i].getLabel());
+							transition.setFromX(.7);
+							transition.setToX(1);
+							transition.play();
 							fillLeft();
 						} else if (tiles[j - 1][i].getValue() == 0) {
 							tiles[j - 1][i].setValue(tiles[j][i].getValue());
@@ -234,10 +246,18 @@ public class TwentyFourtyEight extends Puzzle {
 							tiles[j + 1][i].setValue(tiles[j + 1][i].getValue() + tiles[j][i].getValue());
 							tiles[j][i].setValue(0);
 							addScore(tiles[j + 1][i].getValue() + tiles[j][i].getValue());
+							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j+1][i].getLabel());
+							transition.setFromX(.7);
+							transition.setToX(1);
+							transition.play();
 							fillRight();
 						} else if (tiles[j + 1][i].getValue() == 0) {
 							tiles[j + 1][i].setValue(tiles[j][i].getValue());
 							tiles[j][i].setValue(0);
+							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j][i].getLabel());
+							transition.setFromX(.7);
+							transition.setToX(1);
+							transition.play();
 							fillRight();
 						}
 					}
@@ -258,6 +278,12 @@ public class TwentyFourtyEight extends Puzzle {
 					if (tiles[j][i].getValue() != 0) {
 						if (j + 1 < tiles.length) {
 							if (tiles[j + 1][i].getValue() == 0) {
+								ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j][i].getLabel());
+								transition.setFromX(.95);
+								transition.setToX(1);
+								transition.setFromY(.95);
+								transition.setToY(1);
+								transition.play();
 								tiles[j + 1][i].setValue(tiles[j][i].getValue());
 								tiles[j][i].setValue(0);
 							}
@@ -275,6 +301,12 @@ public class TwentyFourtyEight extends Puzzle {
 					if (tiles[j][i].getValue() != 0) {
 						if (j - 1 >= 0) {
 							if (tiles[j - 1][i].getValue() == 0) {
+								ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j][i].getLabel());
+								transition.setFromX(.95);
+								transition.setToX(1);
+								transition.setFromY(.95);
+								transition.setToY(1);
+								transition.play();
 								tiles[j - 1][i].setValue(tiles[j][i].getValue());
 								tiles[j][i].setValue(0);
 							}
@@ -292,6 +324,12 @@ public class TwentyFourtyEight extends Puzzle {
 					if (tArr[i].getValue() != 0) {
 						if (i - 1 >= 0) {
 							if (tArr[i - 1].getValue() == 0) {
+								ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tArr[i].getLabel());
+								transition.setFromX(.95);
+								transition.setToX(1);
+								transition.setFromY(.95);
+								transition.setToY(1);
+								transition.play();
 								tArr[i - 1].setValue(tArr[i].getValue());
 								tArr[i].setValue(0);
 							}
@@ -309,6 +347,12 @@ public class TwentyFourtyEight extends Puzzle {
 					if (tArr[i].getValue() != 0) {
 						if (i + 1 <= tArr.length - 1) {
 							if (tArr[i + 1].getValue() == 0) {
+								ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tArr[i].getLabel());
+								transition.setFromX(.95);
+								transition.setToX(1);
+								transition.setFromY(.95);
+								transition.setToY(1);
+								transition.play();
 								tArr[i + 1].setValue(tArr[i].getValue());
 								tArr[i].setValue(0);
 							}
