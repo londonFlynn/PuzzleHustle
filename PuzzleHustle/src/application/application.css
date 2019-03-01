@@ -1,5 +1,5 @@
 .nameLabel{
-	-fx-font-size: 50pt;
+	-fx-font-size: 65pt;
 	fx-font-weight: bold;
 	-fx-text-fill: #00a5f0;
 	-fx-background-color: #222;
@@ -52,6 +52,7 @@
 .nav{
 	-fx-background-color: #333;
 	-fx-min-height: 120px;
+	-fx-min-width: 1400px;
 	-fx-border-radius: 10 10 0 0;
   	-fx-background-radius: 10 10 0 0;
 }
