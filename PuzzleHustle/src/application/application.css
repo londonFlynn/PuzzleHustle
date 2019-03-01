@@ -11,6 +11,9 @@
 .root{
 	-fx-background-color: #555;
 }
+.sudokuBoard{
+	-fx-background-color: #ddd;
+}
 .button{
 	-fx-font-size: 15pt;
 	-fx-font-weight: bold;
