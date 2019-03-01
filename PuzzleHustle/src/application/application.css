@@ -1,6 +1,6 @@
 .nameLabel{
 	-fx-font-size: 65pt;
-	fx-font-weight: bold;
+	-fx-font-weight: bold;
 	-fx-text-fill: #00a5f0;
 	-fx-background-color: #222;
 	-fx-min-width: 1400px;
@@ -13,7 +13,7 @@
 }
 .button{
 	-fx-font-size: 15pt;
-	fx-font-weight: bold;
+	-fx-font-weight: bold;
 	-fx-background-color: #00a5f0;
 	-fx-text-fill: #000;
 	-fx-padding: 15px;
@@ -26,7 +26,7 @@
 }
 .gameStats{
 	-fx-font-size: 14pt;
-	fx-font-weight: bold;
+	-fx-font-weight: bold;
 	-fx-text-fill: #000;
 	-fx-padding: 5px;
     -fx-border-insets: 5px;
@@ -37,7 +37,7 @@
 }
 .instructions{
 	-fx-font-size: 40pt;
-	fx-font-weight: bold;
+	-fx-font-weight: bold;
 	-fx-text-fill: #fff;
 	-fx-padding: 5px;
     -fx-border-insets: 5px;
