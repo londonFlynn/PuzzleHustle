@@ -35,22 +35,30 @@ public class Display {
 		root.setPadding(new Insets(20, 0, 20, 0));
 		root.setMinSize(width, height/6);
 		
-		name.setPadding(new Insets(50, 0, 50, 0));
+		name.setPadding(new Insets(10, 0, 10, 0));
 		name.setMinSize(width, height/6);
 		
-		navigation.setPadding(new Insets(20, 20, 20, 20));
+		navigation.setPadding(new Insets(10, 20, 10, 20));
 		navigation.setMinSize(width, height/12 +2);
 		navigation.setAlignment(Pos.CENTER);
+		navigation.getStyleClass().add("nav");
+		navigation.setSpacing(50);
 		
 		leftSidebar.setPadding(new Insets(30, 30, 30, 30));
 		leftSidebar.setMinSize(width/6, height * 4/6 + 20);
-		
 		rightSidebar.setPadding(new Insets(30, 30, 30, 30));
 		rightSidebar.setMinSize(width/6, height * 4/6 + 20);
+		leftSidebar.getStyleClass().add("sideBar");
+		rightSidebar.getStyleClass().add("sideBar");
+		leftSidebar.setAlignment(Pos.CENTER);
+		rightSidebar.setAlignment(Pos.CENTER);
+		leftSidebar.setSpacing(30);
 		
 		mainView.setMinSize(width * 4/6, height * 4/6 + 20);
 		mainView.setMaxSize(width * 4/6, height * 4/6 + 20);
 		mainCollection.getChildren().addAll(leftSidebar,mainView,rightSidebar);
+		mainCollection.setAlignment(Pos.CENTER);
+		
 		root.getChildren().addAll(name,navigation,mainCollection);
 	}
 
