@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import enums.PuzzleType;
-import interfaces.IExitable;
-import interfaces.SubscribesToExitable;
 
 public class User implements Serializable {
 
