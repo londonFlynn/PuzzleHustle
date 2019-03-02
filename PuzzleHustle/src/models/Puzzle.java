@@ -40,7 +40,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		setFilePath(filePath);
 		this.PUZZLE_TYPE = PUZZLE_TYPE;
 		setUser(user);
-		display.getLeftSidebar().getChildren().addAll(saveButton(),deleteButton(),instructionsButton());
+		display.getLeftSidebar().getChildren().addAll(/*saveButton(),deleteButton(),*/instructionsButton());
 		display.getName().getChildren().add(getPuzzleName());
 		display.getNavigation().getChildren().add(exitButton());
 		display.getNavigation().getChildren().add(newPuzzleButton());
@@ -68,18 +68,18 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		totalWinsLabel.setAlignment(Pos.CENTER);
 		scoreLabel.setAlignment(Pos.CENTER);
 	}
-	private Button saveButton() {
-		Button save = new Button("Save");
-		save.setMinSize(100, 40);
-		save.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				save();
-			}
-		});
-		return save;
-	}
-	
+//	private Button saveButton() {
+//		Button save = new Button("Save");
+//		save.setMinSize(100, 40);
+//		save.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent event) {
+//				save();
+//			}
+//		});
+//		return save;
+//	}
+//	
 	private Label getPuzzleName() {
 		String name;
 		switch (PUZZLE_TYPE) {
@@ -108,24 +108,24 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		
 	}
 	
-	public void save() {
-		lib.FileIO.save(this, getFilePath());
-	}
-	private Button deleteButton() {
-		Button delete = new Button("Delete");
-		delete.setMinSize(100, 40);
-		delete.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				delete();
-			}
-		});
-		return delete;
-	}
-	public void delete() {
-		lib.FileIO.delete(getFilePath());
-		exit();
-	}
+//	public void save() {
+//		System.out.println(lib.FileIO.save(this, getFilePath()));
+//	}
+//	private Button deleteButton() {
+//		Button delete = new Button("Delete");
+//		delete.setMinSize(100, 40);
+//		delete.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent event) {
+//				delete();
+//			}
+//		});
+//		return delete;
+//	}
+//	public void delete() {
+//		lib.FileIO.delete(getFilePath());
+//		exit();
+//	}
 	public Scene getScene() {
 		this.scene = display.getScene();
 		this.puzzlePane = display.getMainView();
