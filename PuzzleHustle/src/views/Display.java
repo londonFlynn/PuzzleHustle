@@ -6,7 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class Display {
+public class Display implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private VBox root = new VBox();
 	
