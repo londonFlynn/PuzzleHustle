@@ -12,16 +12,17 @@ public class User implements Serializable {
 	private HashMap<PuzzleType, Float> highScore = new HashMap<>();
 	private HashMap<PuzzleType, Integer> totalWins = new HashMap<>();
 	private HashMap<PuzzleType, Integer> totalPlays = new HashMap<>();
-	private String filePath;
+	private String filePath = "user"+name+".txt";
 	
 	public User(String name) {
 		setName(name);
+		setFilePath("user"+getName()+".txt");
 	}
 	public void save() {
-		lib.FileIO.save(this, getName() + ".txt");
+		lib.FileIO.save(this, filePath);
 	}
 	public void delete() {
-		lib.FileIO.delete(getName() + ".txt");
+		lib.FileIO.delete(filePath);
 	}
 	public String getName() {
 		return name;
@@ -58,7 +59,7 @@ public class User implements Serializable {
 	public void setFilePath(String path) {
 		this.filePath = path;
 	}
-	public String gettFilePath() {
+	public String getFilePath() {
 		return filePath;
 	}
 
