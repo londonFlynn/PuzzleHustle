@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import enums.PuzzleType;
+import interfaces.IExitable;
+import interfaces.SubscribesToExitable;
 
 public class User implements Serializable {
 
@@ -14,14 +16,14 @@ public class User implements Serializable {
 	private HashMap<PuzzleType, Integer> totalPlays = new HashMap<>();
 	private String filePath;
 	
-	public User() {
-		
+	public User(String name) {
+		setName(name);
 	}
 	public void save() {
-		
+		lib.FileIO.save(this, getName() + ".txt");
 	}
 	public void delete() {
-		
+		lib.FileIO.delete(getName() + ".txt");
 	}
 	public String getName() {
 		return name;
@@ -54,9 +56,6 @@ public class User implements Serializable {
 	}
 	public void setTotalPlays(PuzzleType puzzleType, Integer plays) {
 		totalPlays.put(puzzleType, plays);
-	}
-	public void exit() {
-		
 	}
 	public void setFilePath(String path) {
 		this.filePath = path;
