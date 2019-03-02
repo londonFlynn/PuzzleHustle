@@ -204,6 +204,9 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		return solved;
 	}
 	public void setSolved(boolean solved) {
+		if (solved = true) {
+			user.setTotalWins(PUZZLE_TYPE, user.getTotalWins(PUZZLE_TYPE)+1);
+		}
 		this.solved = solved;
 	}
 	public String getFilePath() {
