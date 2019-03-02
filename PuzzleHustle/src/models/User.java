@@ -44,6 +44,9 @@ public class User implements Serializable {
 		totalWins.put(puzzleType, wins);
 	}
 	public Integer getTotalPlays(PuzzleType puzzleType) {
+		if (this.totalPlays.get(puzzleType) == null) {
+			setTotalPlays(puzzleType, 0);
+		}
 		return this.totalPlays.get(puzzleType);
 	}
 	public void setTotalPlays(PuzzleType puzzleType, Integer plays) {
