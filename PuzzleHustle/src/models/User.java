@@ -38,6 +38,9 @@ public class User implements Serializable {
 		}
 	}
 	public Integer getTotalWins(PuzzleType puzzleType) {
+		if (this.totalWins.get(puzzleType) == null) {
+			setTotalWins(puzzleType, 0);
+		}
 		return this.totalWins.get(puzzleType);
 	}
 	public void setTotalWins(PuzzleType puzzleType, Integer wins) {
