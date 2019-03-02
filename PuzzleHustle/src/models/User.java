@@ -12,11 +12,11 @@ public class User implements Serializable {
 	private HashMap<PuzzleType, Float> highScore = new HashMap<>();
 	private HashMap<PuzzleType, Integer> totalWins = new HashMap<>();
 	private HashMap<PuzzleType, Integer> totalPlays = new HashMap<>();
-	private String filePath = "user"+name+".txt";
+	private String filePath;
 	
 	public User(String name) {
 		setName(name);
-		setFilePath("user"+getName()+".txt");
+		setFilePath("users/"+getName()+".txt");
 	}
 	public void save() {
 		lib.FileIO.save(this, filePath);
