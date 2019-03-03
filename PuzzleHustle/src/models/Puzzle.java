@@ -31,6 +31,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	protected Display display = new Display();
 	private boolean instructionsMode = true;
 	private Label scoreLabel = new Label("Score: " +Float.toString(getScore()));
+	private Label highScoreLabel;
 	
 	private ArrayList<SubscribesToExitable> exitSubscribers = new ArrayList<>();
 	
@@ -51,7 +52,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		Label userLabel = new Label("User: " + getUser().getName());
 		userLabel.getStyleClass().add("gameStats");
 		display.getRightSidebar().getChildren().add(userLabel);
-		Label highScoreLabel = new Label("High Score: "+ user.getHighScore(PUZZLE_TYPE));
+		highScoreLabel = new Label("High Score: "+ user.getHighScore(PUZZLE_TYPE));
 		highScoreLabel.getStyleClass().add("gameStats");
 		display.getRightSidebar().getChildren().add(highScoreLabel);
 		Label totalPlaysLabel = new Label("Total Plays: "+ user.getTotalPlays(PUZZLE_TYPE));
@@ -198,6 +199,10 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	}
 	public void setScore(float score) {
 		this.score = score;
+		if (score > user.getHighScore(PUZZLE_TYPE)) {
+			user.setHighScore(PUZZLE_TYPE, score);
+			highScoreLabel.textProperty().set("High Score: "+ user.getHighScore(PUZZLE_TYPE));
+		}
 		scoreLabel.textProperty().set("Score: " + getScore());
 	}
 	public boolean isSolved() {
