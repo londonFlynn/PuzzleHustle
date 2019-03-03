@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class Display implements Serializable {
+public class Display {
 	
 	private static final long serialVersionUID = 1L;
 	
