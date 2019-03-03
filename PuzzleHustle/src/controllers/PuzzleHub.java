@@ -4,7 +4,10 @@ import java.io.File;
 import java.util.HashMap;
 
 import enums.PuzzleType;
+import games.Hangman;
+import games.MasterMind;
 import games.Sudoku;
+import games.TwentyFourtyEight;
 import interfaces.IExitable;
 import interfaces.NewPuzzleSubscriber;
 import interfaces.SceneChanges;
@@ -217,16 +220,16 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 			setActivePuzzle(new Sudoku(filePath, activeUser));
 			break;
 		case TWO048:
-			setActivePuzzle(new TwentyFourtyEight(filePath, activeUser));
+			setActivePuzzle(new TwentyFourtyEight(filePath, PuzzleType.TWO048, activeUser));
 			break;
 		case HANGMAN:
-			setActivePuzzle(new Hangman(filePath, activeUser));
+			setActivePuzzle(new Hangman(filePath, PuzzleType.HANGMAN, activeUser));
 			break;
 		case MASTERMIND:
 			setActivePuzzle(new MasterMind(filePath, activeUser));
 			break;
 		case MINESWEEPER:
-			setActivePuzzle(new Minesweeper(filePath, activeUser));
+//			setActivePuzzle(new Minesweeper(filePath, activeUser));
 			break;
 		}
 		runGame();
@@ -448,7 +451,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				setPuzzleChoice(PuzzleType.SUDOKU);
+				setPuzzleChoice(PuzzleType.MASTERMIND);
 				createNewPuzzle(puzzleChoice);
 			}
 		});
@@ -461,7 +464,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				setPuzzleChoice(PuzzleType.SUDOKU);
+				setPuzzleChoice(PuzzleType.MINESWEEPER);
 				createNewPuzzle(puzzleChoice);
 			}
 		});
@@ -474,7 +477,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				setPuzzleChoice(PuzzleType.SUDOKU);
+				setPuzzleChoice(PuzzleType.HANGMAN);
 				createNewPuzzle(puzzleChoice);
 			}
 		});
@@ -487,7 +490,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				setPuzzleChoice(PuzzleType.SUDOKU);
+				setPuzzleChoice(PuzzleType.TWO048);
 				createNewPuzzle(puzzleChoice);
 			}
 		});
