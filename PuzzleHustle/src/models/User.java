@@ -32,7 +32,7 @@ public class User implements Serializable {
 	}
 	public Float getHighScore(PuzzleType puzzleType) {
 		if (this.highScore.get(puzzleType) == null) {
-			setHighScore(puzzleType, 0f);
+			this.highScore.put(puzzleType, 0f);
 		}
 		return highScore.get(puzzleType);
 	}
