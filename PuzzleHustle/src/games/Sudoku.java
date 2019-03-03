@@ -1,5 +1,7 @@
 package games;
 
+import java.io.Serializable;
+
 import enums.PuzzleType;
 import interfaces.ISolveable;
 import javafx.event.ActionEvent;
@@ -22,7 +24,7 @@ import javafx.util.converter.NumberStringConverter;
 import models.Puzzle;
 import models.User;
 
-public class Sudoku extends Puzzle implements ISolveable {
+public class Sudoku extends Puzzle implements ISolveable, Serializable {
 
 	private VBox boardView = new VBox();
 	private VBox sudoku = new VBox();
@@ -31,27 +33,43 @@ public class Sudoku extends Puzzle implements ISolveable {
 	private int[][][][] board;
 	private int[][][][] solution;
 	private int boardSize = 3;
+	private boolean canWin = true;
 	private final Label INSTRUCTIONS = new Label("How to Play Sudoku!"
-			+ "\n\nEach puzzle consists of a 9x9 grid containing given clues in various places. \nThe object is to fill all empty squares so that the numbers 1 to 9 appear exactly once in each row, column and 3x3 box.");
+			+ "\nEach puzzle consists of a 9x9 grid containing \ngiven clues in various places. "
+			+ "\nThe object is to fill all empty squares so that the \nnumbers 1 to 9 appear exactly once in each row, \ncolumn and 3x3 box.");
 
 	public Sudoku(String filePath, User user) {
 		super(filePath, PuzzleType.SUDOKU, user);
 		boardView.setAlignment(Pos.CENTER);
+		
+		boardView.getStyleClass().add("sudokuBoard");
+		
 		INSTRUCTIONS.setAlignment(Pos.CENTER);
+		
+		INSTRUCTIONS.getStyleClass().add("instructions");
+		
 		logic = new SudokuLogic(boardSize);
 		board = logic.generatePuzzle();
 		solution = logic.getSolution();
-		System.out.println(SudokuLogic.toString(solution));
 	}
-	
 
 	private void enterNumber(int newNumber, int rowIn, int columnIn, int row, int column) {
 		board[rowIn][columnIn][row][column] = newNumber;
 		if (SudokuLogic.isSolved(board)) {
-			showSolution();
+			setupBoard(true);
+			if (canWin) {
 			setSolved(true);
+			}
 		}
 	}
+	
+	//TODO hint
+	
+	//TODO check if valid
+	
+	//TODO notes
+	
+	//TODO score
 
 	private VBox setupBoard(boolean solvedVersion) {
 		int cellLength = logic.CELL_LENGTH;
@@ -137,7 +155,7 @@ public class Sudoku extends Puzzle implements ISolveable {
 		puzzlePane.getChildren().clear();
 		puzzlePane.getChildren().addAll(INSTRUCTIONS);
 	}
-	
+
 	@Override
 	public void hideInstructions() {
 		puzzlePane.setAlignment(Pos.CENTER);
@@ -145,6 +163,7 @@ public class Sudoku extends Puzzle implements ISolveable {
 		puzzlePane.getChildren().add(sudoku);
 	}
 
+	
 	private void clearBoard() {
 		setupBoard(false);
 	}
@@ -168,16 +187,22 @@ public class Sudoku extends Puzzle implements ISolveable {
 			@Override
 			public void handle(ActionEvent event) {
 				showSolution();
+				canWin = false;
 			}
 		});
 		return solutionButton;
 	}
+
 	@Override
 	protected void setupPuzzlePane() {
 		sudoku.getChildren().addAll(setupBoard(false));
 		sudoku.setAlignment(Pos.CENTER);
+		
 		puzzlePane.setAlignment(Pos.CENTER);
+		
+		
 		puzzlePane.getChildren().add(sudoku);
+		
 		display.getLeftSidebar().getChildren().addAll(solutionButton(), resetButton());
 	}
 

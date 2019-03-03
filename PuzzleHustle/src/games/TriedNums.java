@@ -1,6 +1,10 @@
 package games;
 
-public class TriedNums {
+import java.io.Serializable;
+
+public class TriedNums implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private int[] tried;
 	
 	public TriedNums(int clsqr) {
