@@ -30,7 +30,8 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	private User user;
 	protected Display display = new Display();
 	private boolean instructionsMode = true;
-	private Label highScoreLabel
+	private Label highScoreLabel;
+	private Label totalWinsLabel;
         private Label totalPlaysLabel;
 	protected Label scoreLabel = new Label("Score: 0");
 	protected long elapsedTimeTotal = 0;
@@ -72,7 +73,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		totalPlaysLabel = new Label("Total Plays: "+ user.getTotalPlays(PUZZLE_TYPE));
 		totalPlaysLabel.getStyleClass().add("gameStats");
 		display.getRightSidebar().getChildren().add(totalPlaysLabel);
-		Label totalWinsLabel = new Label("Total Wins: "+ user.getTotalWins(PUZZLE_TYPE));
+		totalWinsLabel = new Label("Total Wins: "+ user.getTotalWins(PUZZLE_TYPE));
 		totalWinsLabel.getStyleClass().add("gameStats");
 		display.getRightSidebar().getChildren().add(totalWinsLabel);
 		scoreLabel.getStyleClass().add("gameStats");
