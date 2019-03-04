@@ -1,11 +1,13 @@
 package games;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class MMLogic {
+@SuppressWarnings("serial")
+public class MMLogic implements Serializable {
 	private Color[] colors = { Color.RED, Color.BLUE, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.PURPLE };
 	private Color[] puzzle = new Color[colors.length];
 	private int rightSpots = 0;
@@ -101,3 +103,4 @@ public class MMLogic {
 		return canCheck;
 	}
 }
+
