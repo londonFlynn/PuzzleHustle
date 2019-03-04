@@ -42,7 +42,6 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	private void resetStage(Boolean drawSquares) {
 		masterMind.getChildren().clear();
-		display.getLeftSidebar().getChildren().remove(giveUp);
 		drawResetButton();
 		drawGiveUpButton();
 		drawSubmitButton();
@@ -51,13 +50,13 @@ public class MasterMind extends Puzzle implements ISolveable {
 		if (drawSquares) {
 			drawSquares();
 		}
-		drawStats();
 		masterMind.getChildren().add(stats);
 		masterMind.getChildren().addAll(circles);
 		masterMind.getChildren().addAll(squares);
 	}
 
 	private void drawGiveUpButton() {
+		display.getLeftSidebar().getChildren().remove(giveUp);
 		giveUp.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -246,7 +245,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 		drawStats();
 		gameLogic.createPuzzle();
 		puzzlePane.getChildren().add(masterMind);
-		puzzlePane.getStylesheets().add("application/MM.css");
+		puzzlePane.getStylesheets().add("views/MM.css");
 	}
 
 	@Override
@@ -269,3 +268,4 @@ public class MasterMind extends Puzzle implements ISolveable {
 		return scene;
 	}
 }
+
