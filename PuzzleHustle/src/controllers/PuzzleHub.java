@@ -132,7 +132,11 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 	private void createNewUser() {
 		newUserMenu = new VBox();
 		newUserMenu.setAlignment(Pos.CENTER);
-		newUserMenu.getChildren().addAll(nameField, submitNameButton(), validNameLabel);
+		Label enterNamePrompt = new Label("Please enter your user name");
+		enterNamePrompt.getStyleClass().add("gameStats");
+		nameField.textProperty().set("");
+		validNameLabel.textProperty().set("");
+		newUserMenu.getChildren().addAll(enterNamePrompt,nameField, submitNameButton(), validNameLabel);
 		display.getMainView().getChildren().clear();
 		display.getMainView().getChildren().add(newUserMenu);
 	}
