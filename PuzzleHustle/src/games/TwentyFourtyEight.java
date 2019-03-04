@@ -29,9 +29,10 @@ public class TwentyFourtyEight extends Puzzle {
 
 	@Override
 	public void showInstructions() {
+		pauseTimer();
 		puzzlePane.setAlignment(Pos.TOP_CENTER);
 		Label instructions = new Label(
-				"\rHow To Play: \rUse the W,A,S,D keys to slide the tiles\rTry to get the highest score you can!");
+				"\rHow To Play: \rUse the W,A,S,D keys to slide the tiles\r and combine like numbers\rTry to get the highest score you can!");
 		instructions.getStyleClass().add("instructions");
 		puzzlePane.getChildren().clear();
 		puzzlePane.getChildren().add(instructions);
@@ -40,6 +41,10 @@ public class TwentyFourtyEight extends Puzzle {
 
 	@Override
 	public void hideInstructions() {
+		if(!isOver) {
+			
+			startTimer();
+		}
 		puzzlePane.setAlignment(Pos.CENTER);
 		puzzlePane.getChildren().clear();
 		if (isOver) {
@@ -54,6 +59,7 @@ public class TwentyFourtyEight extends Puzzle {
 	protected void setupPuzzlePane() {
 		run();
 		puzzlePane.getChildren().add(gridPane);
+		startTimer();
 
 	}
 
@@ -100,6 +106,7 @@ public class TwentyFourtyEight extends Puzzle {
 //			}
 //		}
 //		randomizeStart();
+		pauseTimer();
 		puzzlePane.setAlignment(Pos.TOP_CENTER);
 		puzzlePane.getChildren().clear();
 		gameOver.setAlignment(Pos.TOP_CENTER);
