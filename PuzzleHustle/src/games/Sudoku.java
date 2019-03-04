@@ -51,6 +51,7 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 		logic = new SudokuLogic(boardSize);
 		board = logic.generatePuzzle();
 		solution = logic.getSolution();
+		startTimer();
 	}
 
 	private void enterNumber(int newNumber, int rowIn, int columnIn, int row, int column) {
@@ -156,6 +157,7 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 
 	@Override
 	public void showInstructions() {
+		pauseTimer();
 		puzzlePane.setAlignment(Pos.TOP_CENTER);
 		puzzlePane.getChildren().clear();
 		puzzlePane.getChildren().addAll(INSTRUCTIONS);
@@ -166,6 +168,7 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 		puzzlePane.setAlignment(Pos.CENTER);
 		puzzlePane.getChildren().clear();
 		puzzlePane.getChildren().add(sudoku);
+		startTimer();
 	}
 
 	
