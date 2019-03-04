@@ -1,0 +1,40 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+#resetButton {
+	-fx-font-size: 10pt;
+	-fx-min-height: 50px;
+	-fx-min-width: 70px;
+	-fx-max-height: 50px;
+	-fx-max-width: 70px;
+}
+#starterButton {
+	-fx-font-size: 38pt;
+	-fx-min-width: 80px;
+	-fx-min-height: 200px;
+}
+#submitButton {
+	-fx-font-size: 10pt;
+	-fx-min-height: 50px;
+	-fx-min-width: 150px;
+	-fx-max-height: 50px;
+	-fx-max-width: 150px;
+}
+#message {
+	-fx-background-color: #00a5f0;
+	-fx-font-size: 38pt;
+	-fx-text-fill: black;
+}
+#message2 {
+	-fx-text-fill: black;
+	-fx-font-size: 15pt;
+}
+#instructions,
+#stats {
+	-fx-fill: white;
+	-fx-font-size: 12pt;	
+}
+.button {
+	-fx-cursor: hand;
+}
+#puzzle {
+	-fx-font-size: 27pt;
+}
