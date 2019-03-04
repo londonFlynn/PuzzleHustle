@@ -8,6 +8,7 @@ import interfaces.IExitable;
 import interfaces.NewPuzzlePublisher;
 import interfaces.NewPuzzleSubscriber;
 import interfaces.SubscribesToExitable;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -29,7 +30,6 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	private User user;
 	protected Display display = new Display();
 	private boolean instructionsMode = true;
-	private Label scoreLabel = new Label("Score: " +Float.toString(getScore()));
 	private Label highScoreLabel;
 	protected Label scoreLabel = new Label("Score: 0");
 	protected long elapsedTimeTotal = 0;
@@ -57,7 +57,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		display.getName().getChildren().add(getPuzzleName());
 		display.getNavigation().getChildren().add(exitButton());
 		display.getNavigation().getChildren().add(newPuzzleButton());
-		Label timeLabel = new Label("Time: " +Double.toString(getTimeSpent()));
+		Label timeLabel = new Label("Time: 00:00.0");
 		timeLabel.getStyleClass().add("gameStats");
 		display.getRightSidebar().getChildren().add(timeLabel);
 		display.getRightSidebar().getChildren().add(scoreLabel);
@@ -199,13 +199,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	public abstract void showInstructions();
 	
 	public abstract void hideInstructions();
-	
-	public double getTimeSpent() {
-		return timeSpent;
-	}
-	public void setTimeSpent(double timeSpent) {
-		this.timeSpent = timeSpent;
-	}
+
 	public float getScore() {
 		return score;
 	}
@@ -313,8 +307,8 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 			sb.append(millSeconds/100);
 		}
 		return sb.toString();
-	}
-}
+		}
+	
 	
 
 }
