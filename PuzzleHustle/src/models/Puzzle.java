@@ -22,7 +22,6 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	protected VBox puzzlePane = new VBox();
 	protected Scene scene;
 	private static final long serialVersionUID = 1L;
-	private double timeSpent = 0;
 	private float score = 0;
 	private boolean solved = false;
 	private String filePath;
@@ -32,6 +31,19 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	private boolean instructionsMode = true;
 	private Label scoreLabel = new Label("Score: " +Float.toString(getScore()));
 	private Label highScoreLabel;
+	protected Label scoreLabel = new Label("Score: 0");
+	protected long elapsedTimeTotal = 0;
+	protected long startTime;
+	protected AnimationTimer updater = new AnimationTimer() {
+		@Override
+		public void handle(long now) {
+			long elapsedMillis = (System.currentTimeMillis() - startTime) + elapsedTimeTotal;
+			Label time = (Label) display.getRightSidebar().getChildren().get(0);
+			time.setText("Time: " + getTimerPresent(elapsedMillis));
+			Label score = (Label) display.getRightSidebar().getChildren().get(1);
+			score.setText("Score: " + getScore());
+		}
+	};
 	
 	private ArrayList<SubscribesToExitable> exitSubscribers = new ArrayList<>();
 	
@@ -252,6 +264,57 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		
 	}
 	
+		protected void startTimer() {
+		startTime = System.currentTimeMillis();
+		updater.start();
+	}
+	
+	protected void pauseTimer() {
+		elapsedTimeTotal += System.currentTimeMillis() - startTime;
+		updater.stop();
+	}
+	
+	protected String getTimerPresent(long elapsedMillis){
+		StringBuilder sb = new StringBuilder();
+		
+		int minutes = (int) (elapsedMillis / 60000);
+		int seconds = (int) ((elapsedMillis / 1000) - (minutes * 60));
+		int millSeconds = (int) (elapsedMillis - ((seconds * 1000) + minutes * 60000));
+		
+		if (minutes < 10) {
+			if (minutes == 0) {
+				sb.append("00:");
+			} else {
+				sb.append("0")
+				.append(minutes)
+				.append(":");
+			}
+		} else {
+			sb.append(minutes)
+			.append(":");
+		}
+		
+		if (seconds < 10) {
+			if (seconds == 0) {
+				sb.append("00:");
+			} else {
+				sb.append("0")
+				.append(seconds)
+				.append(".");
+			}
+		} else {
+			sb.append(seconds)
+			.append(".");
+		}
+		
+		if (millSeconds < 100) {
+			sb.append("0");
+		} else {
+			sb.append(millSeconds/100);
+		}
+		return sb.toString();
+	}
+}
 	
 
 }
