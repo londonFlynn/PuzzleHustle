@@ -62,6 +62,7 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 			setScore(getScore()-8);
 		}
 		if (SudokuLogic.isSolved(board)) {
+			pauseTimer();
 			setupBoard(true);
 			if (canWin) {
 			setSolved(true);
