@@ -55,6 +55,11 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 
 	private void enterNumber(int newNumber, int rowIn, int columnIn, int row, int column) {
 		board[rowIn][columnIn][row][column] = newNumber;
+		if (newNumber == solution[rowIn][columnIn][row][column]) {
+			setScore(getScore()+10);
+		} else if (newNumber != 0){
+			setScore(getScore()-8);
+		}
 		if (SudokuLogic.isSolved(board)) {
 			setupBoard(true);
 			if (canWin) {
