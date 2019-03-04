@@ -371,7 +371,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 				valid = false;
 			}
 			if (showCharInvalid) {
-				setValidNameLabel("Your user name can only include numbers and letters.");
+				setValidNameLabel("Your user name can only include numbers \nand letters.");
 			}
 		}
 		return valid;
