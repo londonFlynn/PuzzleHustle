@@ -16,15 +16,16 @@ public class HMLogic {
 			'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 	private String[] words = null;
 	private int count = 0;
+	private Boolean lost = false;
 
 	private void createDictionary() {
 		String text = "";
 		try {
-			FileReader fr = new FileReader("dictionary.txt");
+			FileReader fr = new FileReader("Dictionary.txt");
 			BufferedReader reader = new BufferedReader(fr);
 			String line = reader.readLine();
 			while (line != null) {
-				if (line.indexOf("'") == -1) {
+				if (line.indexOf("\n") == -1) {
 					text += line + ",";
 				}
 				line = reader.readLine();
@@ -40,7 +41,10 @@ public class HMLogic {
 		createDictionary();
 		Random rng = new Random();
 		int index = rng.nextInt(words.length);
-		return words[index];
+		for (int i = 0; i < words.length; i++) {
+			System.out.println(i + ": " + words[i]);
+		}
+		return words[41];
 	}
 	
 	public String showAnswer() {
@@ -193,6 +197,10 @@ public class HMLogic {
 		}
 		sb.append("\n");
 		return sb.toString();
+	}
+	
+	public Boolean isLost() {
+		return lost;
 	}
 
 //	private boolean checkIfWon() {
