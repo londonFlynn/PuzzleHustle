@@ -29,6 +29,14 @@
   	-fx-background-radius: 10 10 10 10;
   	-fx-cursor: hand;
 }
+.button:pressed{
+        -fx-scale-y: 0.7;
+        -fx-scale-x: 0.7;
+}
+.button:hover {
+        -fx-background-color: #0072d0;
+        -fx-scale-y: 1.1;
+}
 .gameStats{
 	-fx-font-size: 14pt;
 	-fx-font-weight: bold;
