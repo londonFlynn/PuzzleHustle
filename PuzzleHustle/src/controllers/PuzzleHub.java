@@ -342,7 +342,6 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 	}
 
 	private void setValidNameLabel(String s) {
-		validNameLabel = new Label(s);
 		validNameLabel.getStyleClass().add("instructions");
 		validNameLabel.textProperty().set(s);
 	}
