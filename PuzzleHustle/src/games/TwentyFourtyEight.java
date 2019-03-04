@@ -1,7 +1,6 @@
 package games;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import enums.PuzzleType;
 import javafx.animation.ScaleTransition;
@@ -14,6 +13,7 @@ import javafx.util.Duration;
 import models.Puzzle;
 import models.User;
 
+@SuppressWarnings("serial")
 public class TwentyFourtyEight extends Puzzle {
 	private Tile[][] tiles = new Tile[4][4];
 	private int[][] valueCheck = new int[4][4];
@@ -22,8 +22,9 @@ public class TwentyFourtyEight extends Puzzle {
 	private GridPane gridPane = new GridPane();
 	private boolean isOver = false;
 
-	public TwentyFourtyEight(String filePath, PuzzleType PUZZLE_TYPE, User user) {
-		super(filePath, PUZZLE_TYPE, user);
+	public TwentyFourtyEight(String filePath, User user) {
+		
+		super(filePath, PuzzleType.TWO048, user);
 		// TODO Auto-generated constructor stub
 	}
 
