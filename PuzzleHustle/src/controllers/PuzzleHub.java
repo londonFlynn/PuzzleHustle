@@ -227,7 +227,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 			setActivePuzzle(new TwentyFourtyEight(filePath, PuzzleType.TWO048, activeUser));
 			break;
 		case HANGMAN:
-			setActivePuzzle(new Hangman(filePath, PuzzleType.HANGMAN, activeUser));
+			setActivePuzzle(new Hangman(filePath, activeUser));
 			break;
 		case MASTERMIND:
 			setActivePuzzle(new MasterMind(filePath, activeUser));
