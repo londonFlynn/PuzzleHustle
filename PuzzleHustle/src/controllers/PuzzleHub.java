@@ -161,7 +161,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 			}
 			list.setItems(items);
 			list.setPrefWidth(100);
-			list.setPrefHeight(display.getMainView().getHeight());
+			list.setMinHeight(display.getMainCollection().getHeight()-30);
 		} else {
 			throw new ArrayIndexOutOfBoundsException();
 		}
