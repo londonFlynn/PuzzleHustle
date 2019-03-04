@@ -159,6 +159,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 			for (int i = 1; i < allUsers.length; i++) {
 				items.add((Button) selectUserButton(allUsers[i]));
 			}
+			list.getStyleClass().add("userList");
 			list.setItems(items);
 			list.setPrefWidth(100);
 			list.setMinHeight(display.getMainCollection().getHeight()-30);
