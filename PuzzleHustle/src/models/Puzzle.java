@@ -30,7 +30,8 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	private User user;
 	protected Display display = new Display();
 	private boolean instructionsMode = true;
-	private Label highScoreLabel;
+	private Label highScoreLabel
+  private Label totalPlaysLabel;
 	protected Label scoreLabel = new Label("Score: 0");
 	protected long elapsedTimeTotal = 0;
 	protected long startTime;
@@ -44,6 +45,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 			score.setText("Score: " + getScore());
 		}
 	};
+	
 	
 	private ArrayList<SubscribesToExitable> exitSubscribers = new ArrayList<>();
 	
@@ -67,7 +69,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 		highScoreLabel = new Label("High Score: "+ user.getHighScore(PUZZLE_TYPE));
 		highScoreLabel.getStyleClass().add("gameStats");
 		display.getRightSidebar().getChildren().add(highScoreLabel);
-		Label totalPlaysLabel = new Label("Total Plays: "+ user.getTotalPlays(PUZZLE_TYPE));
+		totalPlaysLabel = new Label("Total Plays: "+ user.getTotalPlays(PUZZLE_TYPE));
 		totalPlaysLabel.getStyleClass().add("gameStats");
 		display.getRightSidebar().getChildren().add(totalPlaysLabel);
 		Label totalWinsLabel = new Label("Total Wins: "+ user.getTotalWins(PUZZLE_TYPE));
@@ -217,6 +219,7 @@ public abstract class Puzzle implements NewPuzzlePublisher, Serializable, IExita
 	public void setSolved(boolean solved) {
 		if (solved = true) {
 			user.setTotalWins(PUZZLE_TYPE, user.getTotalWins(PUZZLE_TYPE)+1);
+			totalWinsLabel.textProperty().set("Total Wins: "+ user.getTotalWins(PUZZLE_TYPE));
 		}
 		this.solved = solved;
 	}
