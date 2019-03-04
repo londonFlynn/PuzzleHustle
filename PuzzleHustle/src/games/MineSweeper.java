@@ -356,7 +356,7 @@ public class MineSweeper extends Puzzle implements ISolveable {
 		}
 		Alert gameOver = new Alert(AlertType.INFORMATION, "You've lost!", ButtonType.OK);
 		gameOver.showAndWait();
-		newGame();
+		newPuzzle();
 	}
 
 	private void newGame() {
@@ -369,7 +369,7 @@ public class MineSweeper extends Puzzle implements ISolveable {
 		super.setScore(0);
 		Label temp = (Label) display.getRightSidebar().getChildren().get(0);
 		temp.setText("Time: " + super.getTimerPresent(0));
-		getRoot().getChildren().add(getMineField());
+//		getRoot().getChildren().add(getMineField());
 		newPuzzle();
 	}
 	
