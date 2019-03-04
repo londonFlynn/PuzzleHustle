@@ -8,6 +8,7 @@ import games.Hangman;
 import games.MasterMind;
 import games.Sudoku;
 import games.TwentyFourtyEight;
+import games.MineSweeper;
 import interfaces.IExitable;
 import interfaces.NewPuzzleSubscriber;
 import interfaces.SceneChanges;
@@ -233,7 +234,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 			setActivePuzzle(new MasterMind(filePath, activeUser));
 			break;
 		case MINESWEEPER:
-//			setActivePuzzle(new Minesweeper(filePath, activeUser));
+			setActivePuzzle(new MineSweeper(filePath, activeUser));
 			break;
 		}
 		runGame();
