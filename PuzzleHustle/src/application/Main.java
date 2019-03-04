@@ -37,6 +37,10 @@ public class Main extends Application{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		primaryStage.setMinWidth(primaryStage.getWidth());
+		primaryStage.setMinHeight(primaryStage.getHeight());
+		primaryStage.setMaxWidth(primaryStage.getWidth());
+		primaryStage.setMaxHeight(primaryStage.getHeight());
 	}
 	
 	public static void main(String[] args) {
