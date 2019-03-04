@@ -15,6 +15,9 @@
 	-fx-font-size: 20pt;
 	-fx-background-color: #ddd;
 }
+.userList {
+	-fx-background-color: #555;
+}
 .button{
 	-fx-font-size: 15pt;
 	-fx-font-weight: bold;
