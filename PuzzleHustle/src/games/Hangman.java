@@ -27,6 +27,8 @@ public class Hangman extends Puzzle implements ISolveable {
 	private boolean isDone = false;
 	private int gameMode = 0;
 	private TextField guessBox;
+	private Text puzzle;
+	private Boolean wasStarted = false;
 
 	public Hangman(String filePath, User user) {
 		super(filePath, PuzzleType.HANGMAN, user);
@@ -48,12 +50,11 @@ public class Hangman extends Puzzle implements ISolveable {
 			menuMessage2.setTranslateY(150);
 			drawStarterButtons();
 		} else {
+			startTimer();
 			drawGiveUpButton();
 			startGame();
 		}
 	}
-
-	Text puzzle;
 
 	private void createPuzzle() {
 		gameLogic.game();
@@ -107,7 +108,7 @@ public class Hangman extends Puzzle implements ISolveable {
 	}
 
 	private void startGame() {
-		Image gallowPic = new Image("File:Picture1.png");
+		Image gallowPic = new Image("File:Gallows.png");
 		ImageView gallows = new ImageView(gallowPic);
 		hangman.getChildren().add(gallows);
 
@@ -127,6 +128,7 @@ public class Hangman extends Puzzle implements ISolveable {
 			@Override
 			public void handle(ActionEvent event) {
 				gameMode = 1;
+				wasStarted = true;
 				resetStage(false);
 			}
 		});
@@ -134,6 +136,7 @@ public class Hangman extends Puzzle implements ISolveable {
 			@Override
 			public void handle(ActionEvent event) {
 				gameMode = 2;
+				wasStarted = true;
 				resetStage(false);
 			}
 		});
@@ -168,13 +171,29 @@ public class Hangman extends Puzzle implements ISolveable {
 
 	@Override
 	public void showInstructions() {
-		// TODO Auto-generated method stub
-
+		if (wasStarted) {
+			pauseTimer();
+		}
+		hangman.getChildren().clear();
+		Text instructions = new Text("Type your guessed character in the box. "
+				+ "After guessing, your guess will either show up under the \""
+				+ "correct guesses so far\" section, or \nthe \"wrong guesses so "
+				+ "far\" section. If you guess incorrectly 6 times, you lose. " + "Guess every character to win!");
+		instructions.setId("instructions");
+		instructions.setY(100);
+		instructions.setX(10);
+		hangman.getChildren().add(instructions);
 	}
 
 	@Override
 	public void hideInstructions() {
-
+		if (wasStarted) {
+			hangman.getChildren().clear();
+			resetStage(false);
+		} else {
+			hangman.getChildren().clear();
+			resetStage(true);
+		}
 	}
 
 	@Override
