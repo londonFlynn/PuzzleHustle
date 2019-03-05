@@ -36,5 +36,13 @@
 	-fx-cursor: hand;
 }
 #puzzle {
-	-fx-font-size: 27pt;
+	-fx-font-size: 19pt;
+}
+#phraseBox {
+	-fx-font-size: 20px;
+	-fx-pref-height: 50px;
+	-fx-pref-width: 800px;
+}
+#cover {
+	-fx-fill: #555;
 }
