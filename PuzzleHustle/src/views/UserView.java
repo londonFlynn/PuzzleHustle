@@ -42,7 +42,7 @@ public class UserView implements IExitable {
 		GridPane fullView = new GridPane();
 		VBox[] VBoxes = new VBox[6];
 		
-		Label userName = new Label(user.getName());
+		Label userName = new Label("All Games");
 		int generalTotalPlays = 0;
 		for (PuzzleType puzzleType : PuzzleType.values()) {
 			generalTotalPlays += user.getTotalPlays(puzzleType);
@@ -51,8 +51,9 @@ public class UserView implements IExitable {
 		for (PuzzleType puzzleType : PuzzleType.values()) {
 			generalTotalWins += user.getTotalWins(puzzleType);
 		} 
-		float generalWinPercent = generalTotalPlays != 0 ? (float)(generalTotalWins / generalTotalPlays) : 0 ;
-		Label generalTotalWinsLabel = new Label("Wins: " + generalTotalWins + " | Win Percent: " + generalWinPercent + "%");
+		float generalWinPercent = generalTotalPlays != 0 ? ((float)generalTotalWins / (float)generalTotalPlays) * 100 : 0 ;
+		DecimalFormat df = new DecimalFormat("###.##");
+		Label generalTotalWinsLabel = new Label("Wins: " + generalTotalWins + " | Win Percent: " + df.format(generalWinPercent) + "%");
 		Label generalTotalPlaysLabel = new Label("Total Plays: " + generalTotalPlays);
 		VBox generalVBox = new VBox();
 		generalVBox.getChildren().addAll(userName, generalTotalPlaysLabel, generalTotalWinsLabel);
@@ -61,7 +62,7 @@ public class UserView implements IExitable {
 		for (int i = 0; i < PuzzleType.values().length; i++) {
 			int totalPlays = user.getTotalPlays(PuzzleType.values()[i]);
 			int totalWins = user.getTotalWins(PuzzleType.values()[i]);
-			float winPercent = totalPlays != 0 ? (float)(totalWins / totalPlays) : 0;
+			float winPercent = totalPlays != 0 ? ((float)totalWins / (float)totalPlays) * 100 : 0;
 			String gameName = "ERROR";
 			switch (PuzzleType.values()[i]) {
 				case SUDOKU: 
@@ -84,7 +85,7 @@ public class UserView implements IExitable {
 			}
 			Label nameLabel = new Label(gameName);
 			Label totalPlaysLabel = new Label("Total Plays: " + totalPlays + " | High Score: " + user.getHighScore(PuzzleType.values()[i]));
-			Label winsLabel = new Label("Wins: " + totalWins + " | Win Percent: " + winPercent + "%");
+			Label winsLabel = new Label("Wins: " + totalWins + " | Win Percent: " + df.format(winPercent) + "%");
 			VBox temp = new VBox();
 			temp.getChildren().addAll(nameLabel, totalPlaysLabel, winsLabel);
 			VBoxes[i+1] = temp;
@@ -120,7 +121,12 @@ public class UserView implements IExitable {
 		fullView.setHgap(5f);
 		fullView.setVgap(5f);
 		display.getMainView().setAlignment(Pos.CENTER);
-		display.getMainView().getChildren().addAll(fullView);
+		
+		Label gun = new Label("Game Stats for " + user.getName());
+		gun.getStyleClass().add("nameLabel");
+		gun.setAlignment(Pos.CENTER);
+		gun.setStyle("-fx-min-width: 50px; -fx-padding: 2px 5px 2px 5px; -fx-min-height: 10px; -fx-font-size: 32px;");
+		display.getMainView().getChildren().addAll(gun, fullView);
 	}
 	
 	private Button exitButton() {
