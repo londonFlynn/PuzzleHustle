@@ -113,6 +113,7 @@ public class Hangman extends Puzzle implements ISolveable {
 		} else {
 			showSolution();
 		}
+		setScore(gameLogic.getScore());
 	}
 
 	private void drawMan(int losses) {
@@ -230,12 +231,12 @@ public class Hangman extends Puzzle implements ISolveable {
 
 	private void gameWon() {
 		wasWon = true;
-		if (gameMode == 1) {
-			setSolved(true);
-			// TODO ask London lol
-			setScore(elapsedTimeTotal);
-		}
 		showSolution();
+		System.out.println(elapsedTimeTotal);
+		if (gameMode == 1) {
+			setScore(gameLogic.getScore());
+			setSolved(true);
+		}
 	}
 
 	@Override
@@ -293,6 +294,16 @@ public class Hangman extends Puzzle implements ISolveable {
 			setupPuzzlePane();
 		}
 		return scene;
+	}
+	
+	@Override
+	public void setScore(float score) {
+		this.score = score;
+		if (score > user.getHighScore(PUZZLE_TYPE) && wasWon) {
+			user.setHighScore(PUZZLE_TYPE, score);
+			highScoreLabel.textProperty().set("High Score: " + user.getHighScore(PUZZLE_TYPE));
+		}
+		scoreLabel.textProperty().set("Score: " + getScore());
 	}
 
 }
