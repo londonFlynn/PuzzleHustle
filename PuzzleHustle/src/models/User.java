@@ -17,6 +17,12 @@ public class User implements Serializable {
 	public User(String name) {
 		setName(name);
 		setFilePath("users/"+getName()+".txt");
+		
+		for (PuzzleType type : PuzzleType.values()) {
+			highScore.put(type, 0f);
+			totalWins.put(type, 0);
+			totalPlays.put(type, 0);
+		}
 	}
 	public void save() {
 		lib.FileIO.save(this, filePath);
