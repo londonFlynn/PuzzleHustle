@@ -1,12 +1,12 @@
 package views;
 
+import java.text.DecimalFormat;
 
 import enums.PuzzleType;
 import interfaces.IExitable;
 import interfaces.SubscribesToExitable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
