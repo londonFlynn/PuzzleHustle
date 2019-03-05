@@ -175,6 +175,7 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 	
 	private void clearBoard() {
 		setupBoard(false);
+		setScore(0);
 	}
 
 	private Button resetButton() {
