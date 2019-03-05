@@ -21,6 +21,10 @@ public class UserView implements IExitable {
 	private SubscribesToExitable subscriber;
 	
 	public UserView(User user, SubscribesToExitable exitSubscriber) {
+		Label viewName = new Label(user.getName());
+		viewName.getStyleClass().add("nameLabel");
+		viewName.setAlignment(Pos.CENTER);
+		display.getName().getChildren().add(viewName);
 		this.user = user;
 		exitSubcribe(exitSubscriber);
 		display.getNavigation().getChildren().add(exitButton());
