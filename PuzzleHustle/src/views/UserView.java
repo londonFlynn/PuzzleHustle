@@ -1,15 +1,18 @@
 package views;
 
-import java.util.ArrayList;
 
 import enums.PuzzleType;
 import interfaces.IExitable;
 import interfaces.SubscribesToExitable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import models.User;
 
 public class UserView implements IExitable {
@@ -32,11 +35,88 @@ public class UserView implements IExitable {
 		setupTotalWins();
 	}
 	private void setupHighScores() {
-		ArrayList<Label> highScores = new ArrayList<>();
+		GridPane fullView = new GridPane();
+		VBox[] VBoxes = new VBox[6];
+		
+		Label userName = new Label(user.getName());
+		int generalTotalPlays = 0;
 		for (PuzzleType puzzleType : PuzzleType.values()) {
-			highScores.add(new Label(getPuzzleName(puzzleType) + " high score: " + user.getHighScore(puzzleType)));
+			generalTotalPlays += user.getTotalPlays(puzzleType);
 		}
-		display.getRightSidebar().getChildren().addAll(highScores);
+		int generalTotalWins = 0;
+		for (PuzzleType puzzleType : PuzzleType.values()) {
+			generalTotalWins += user.getTotalWins(puzzleType);
+		} 
+		float generalWinPercent = generalTotalPlays != 0 ? (float)(generalTotalWins / generalTotalPlays) : 0 ;
+		Label generalTotalWinsLabel = new Label("Wins: " + generalTotalWins + " | Win Percent: " + generalWinPercent + "%");
+		Label generalTotalPlaysLabel = new Label("Total Plays: " + generalTotalPlays);
+		VBox generalVBox = new VBox();
+		generalVBox.getChildren().addAll(userName, generalTotalPlaysLabel, generalTotalWinsLabel);
+		VBoxes[0] = generalVBox;
+		
+		for (int i = 0; i < PuzzleType.values().length; i++) {
+			int totalPlays = user.getTotalPlays(PuzzleType.values()[i]);
+			int totalWins = user.getTotalWins(PuzzleType.values()[i]);
+			float winPercent = totalPlays != 0 ? (float)(totalWins / totalPlays) : 0;
+			String gameName = "ERROR";
+			switch (PuzzleType.values()[i]) {
+				case SUDOKU: 
+					gameName = "Sudoku";
+					break;
+				case HANGMAN: 
+					gameName = "Hangman";
+					break;
+				case MASTERMIND: 
+					gameName = "Mastermind";
+					break;
+				case TWO048: 
+					gameName = "2048";
+					break;
+				case MINESWEEPER: 
+					gameName = "MineSweeper";
+					break;
+				default:
+					System.out.println("This should not appear.");
+			}
+			Label nameLabel = new Label(gameName);
+			Label totalPlaysLabel = new Label("Total Plays: " + totalPlays + " | High Score: " + user.getHighScore(PuzzleType.values()[i]));
+			Label winsLabel = new Label("Wins: " + totalWins + " | Win Percent: " + winPercent + "%");
+			VBox temp = new VBox();
+			temp.getChildren().addAll(nameLabel, totalPlaysLabel, winsLabel);
+			VBoxes[i+1] = temp;
+		}
+		
+		for (int i = 0; i < VBoxes.length; i++) {
+			Label label1 = (Label) VBoxes[i].getChildren().get(0);
+			label1.getStyleClass().add("highScoreLabelTop");
+			label1.setAlignment(Pos.CENTER);
+			Label label2 = (Label) VBoxes[i].getChildren().get(1);
+			label2.getStyleClass().add("highScoreLabelMid");
+			label2.setAlignment(Pos.CENTER);
+			Label label3 = (Label) VBoxes[i].getChildren().get(2);
+			label3.getStyleClass().add("highScoreLabelBottom");
+			label3.setAlignment(Pos.CENTER);
+			
+			VBoxes[i].setAlignment(Pos.BASELINE_CENTER);
+			VBoxes[i].setMaxWidth(250);
+			VBoxes[i].setMinWidth(250);
+		}
+		
+		fullView.add(VBoxes[0], 1, 0);
+		fullView.add(VBoxes[1], 2, 1);
+		fullView.add(VBoxes[2], 2, 0);
+		fullView.add(VBoxes[3], 1, 1);
+		fullView.add(VBoxes[4], 0, 1);
+		fullView.add(VBoxes[5], 0, 0);
+		
+		fullView.setMaxWidth(750);
+		fullView.setMinWidth(750);
+		fullView.setMaxHeight(300);
+		fullView.setMinHeight(300);
+		fullView.setHgap(5f);
+		fullView.setVgap(5f);
+		display.getMainView().setAlignment(Pos.CENTER);
+		display.getMainView().getChildren().addAll(fullView);
 	}
 	
 	private Button exitButton() {
