@@ -24,17 +24,18 @@ public class Hangman extends Puzzle implements ISolveable {
 	private HMLogic gameLogic = new HMLogic();
 	private Pane hangman = null;
 	private Button giveUp = new Button("Give Up");
-	private boolean isDone = false;
 	private int gameMode = 0;
 	private TextField guessBox;
 	private Text puzzle;
 	private Boolean wasStarted = false;
-	private String phrase = "";		Rectangle head = new Rectangle();
-	Rectangle body;
-	Rectangle rightArm;
-	Rectangle leftArm;
-	Rectangle leftLeg;
-	Rectangle rightLeg;
+	private String phrase = "";
+	private Rectangle head;
+	private Rectangle body;
+	private Rectangle rightArm;
+	private Rectangle leftArm;
+	private Rectangle leftLeg;
+	private Rectangle rightLeg;
+	private boolean wasWon = false;
 
 	public Hangman(String filePath, User user) {
 		super(filePath, PuzzleType.HANGMAN, user);
@@ -89,6 +90,9 @@ public class Hangman extends Puzzle implements ISolveable {
 					gameLogic.setGuess(guessBox.getText().charAt(0));
 					guessBox.setText("");
 					checkGuess();
+					if (gameLogic.checkIfWon()) {
+						gameWon();
+					}
 				}
 			}
 		});
@@ -110,7 +114,7 @@ public class Hangman extends Puzzle implements ISolveable {
 			showSolution();
 		}
 	}
-	
+
 	private void drawMan(int losses) {
 		switch (losses) {
 		case 6:
@@ -132,7 +136,8 @@ public class Hangman extends Puzzle implements ISolveable {
 		Image gallowPic = new Image("File:Gallows.png");
 		Image hungmanPic = new Image("File:hungman.png");
 		ImageView gallows = new ImageView(gallowPic);
-		ImageView hungman = new ImageView(hungmanPic);head = new Rectangle();
+		ImageView hungman = new ImageView(hungmanPic);
+		head = new Rectangle();
 		head = new Rectangle(575, 31, 60, 116);
 		body = new Rectangle(575, 147, 52, 87);
 		rightArm = new Rectangle(555, 150, 20, 80);
@@ -155,6 +160,7 @@ public class Hangman extends Puzzle implements ISolveable {
 		hungman.setPreserveRatio(true);
 		hungman.setTranslateY(75);
 		hungman.setTranslateX(535);
+
 		createPuzzle();
 	}
 
@@ -222,13 +228,25 @@ public class Hangman extends Puzzle implements ISolveable {
 
 	}
 
+	private void gameWon() {
+		wasWon = true;
+		if (gameMode == 1) {
+			setSolved(true);
+			// TODO ask London lol
+			setScore(elapsedTimeTotal);
+		}
+		showSolution();
+	}
+
 	@Override
 	public void showSolution() {
 		hangman.getChildren().remove(guessBox);
 		puzzle.setText("The answer was " + "\" " + gameLogic.showAnswer() + "\"" + "\nYou guessed: "
 				+ gameLogic.getAllGuesses().trim());
 		puzzle.setTranslateY(470);
-		drawMan(6);
+		if (!wasWon) {
+			drawMan(6);
+		}
 		pauseTimer();
 	}
 
