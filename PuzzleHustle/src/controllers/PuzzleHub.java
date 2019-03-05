@@ -175,6 +175,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		if (activeUser != null) {
 			display.getRightSidebar().setAlignment(Pos.TOP_CENTER);
 			activeUserLabel = new Label("User: " + user.getName());
+			activeUserLabel.setAlignment(Pos.CENTER);
 			activeUserLabel.getStyleClass().add("gameStats");
 			display.getRightSidebar().getChildren().add(activeUserLabel);
 		}
