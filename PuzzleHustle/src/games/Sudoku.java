@@ -47,11 +47,32 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 		INSTRUCTIONS.setAlignment(Pos.CENTER);
 		
 		INSTRUCTIONS.getStyleClass().add("instructions");
-		
+		setDifficulty();
 		logic = new SudokuLogic(boardSize);
 		board = logic.generatePuzzle();
 		solution = logic.getSolution();
 		startTimer();
+	}
+	private void setDifficulty() {
+		// [0] is the Width of the board, [1] is the Height, and [2] is the number of mines.
+		int[] result = new int[3];
+		
+		ChoiceDialog<String> difficultySelector = new ChoiceDialog<String>("Normal", "Easy", "Normal");
+		difficultySelector.setTitle("Choose Difficulty");
+		difficultySelector.setWidth(250);
+		difficultySelector.setHeight(250);
+		ButtonBar style = (ButtonBar) difficultySelector.getDialogPane().getChildren().get(2);
+		style.getButtons().remove(1);
+		difficultySelector.showAndWait();
+		String dSResult = difficultySelector.getResult() != null ? difficultySelector.getResult() : difficultySelector.getDefaultChoice();
+		
+		if (dSResult.equals("Easy")) {
+			boardSize = 2;
+		} else if (dSResult.equals("Normal")) {
+			boardSize = 3;
+		} else {
+			boardSize = 4;
+		}
 	}
 
 	private void enterNumber(int newNumber, int rowIn, int columnIn, int row, int column) {
