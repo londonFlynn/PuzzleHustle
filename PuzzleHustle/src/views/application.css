@@ -106,3 +106,47 @@
 	-fx-border-radius: 5px 5px 0px 0px;
 	-fx-background-radius: 5px;
 }
+
+/* UserView CSS */
+.highScoreLabelTop{
+	-fx-text-alignment: center;
+	-fx-font-size: 12pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: #222;
+	-fx-background-color: #00a5f0;
+	-fx-min-width: 250px;
+	-fx-max-width: 250px;
+	-fx-min-height: 25px;
+	-fx-max-height: 25px;
+	-fx-border-color: #222;
+	-fx-border-radius: 10 10 0 0;
+  	-fx-background-radius: 10 10 0 0;
+}
+
+.highScoreLabelMid{
+	-fx-text-alignment: center;
+	-fx-font-size: 12pt;
+	-fx-text-fill: #222;
+	-fx-background-color: #00a5f0;
+	-fx-min-width: 250px;
+	-fx-max-width: 250px;
+	-fx-min-height: 25px;
+	-fx-max-height: 25px;
+	-fx-border-color: #222;
+	-fx-border-radius: 0 0 0 0;
+  	-fx-background-radius: 0 0 0 0;
+}
+
+.highScoreLabelBottom{
+	-fx-text-alignment: center;
+	-fx-font-size: 12pt;
+	-fx-text-fill: #222;
+	-fx-background-color: #00a5f0;
+	-fx-min-width: 250px;
+	-fx-max-width: 250px;
+	-fx-min-height: 25px;
+	-fx-max-height: 25px;
+	-fx-border-color: #222;
+	-fx-border-radius: 0 0 10 10;
+  	-fx-background-radius: 0 0 10 10;
+}
