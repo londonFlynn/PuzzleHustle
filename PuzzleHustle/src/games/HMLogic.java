@@ -201,14 +201,15 @@ public class HMLogic {
 	public int getTries() {
 		return count;
 	}
-//	private boolean checkIfWon() {
-//		boolean won = false;
-//		for (int i = 0; i < correctGuesses.length; i++) {
-//			won = correctGuesses[i] == phraseChars[i];
-//			if (!won) {
-//				return false;
-//			}
-//		}
-//		return won;
-//	}
+
+	public boolean checkIfWon() {
+		boolean won = false;
+		for (int i = 0; i < correctGuesses.length; i++) {
+			won = correctGuesses[i] == phraseChars[i];
+			if (!won) {
+				return false;
+			}
+		}
+		return won;
+	}
 }
