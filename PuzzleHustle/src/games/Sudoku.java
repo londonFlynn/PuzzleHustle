@@ -56,8 +56,6 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 		startTimer();
 	}
 	private void setDifficulty() {
-		// [0] is the Width of the board, [1] is the Height, and [2] is the number of mines.
-		int[] result = new int[3];
 		
 		ChoiceDialog<String> difficultySelector = new ChoiceDialog<String>("Normal", "Easy", "Normal");
 		difficultySelector.setTitle("Choose Difficulty");
