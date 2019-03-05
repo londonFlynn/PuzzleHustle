@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import models.Puzzle;
 import models.User;
@@ -22,13 +23,18 @@ public class Hangman extends Puzzle implements ISolveable {
 
 	private HMLogic gameLogic = new HMLogic();
 	private Pane hangman = null;
-	private Text stats;
 	private Button giveUp = new Button("Give Up");
 	private boolean isDone = false;
 	private int gameMode = 0;
 	private TextField guessBox;
 	private Text puzzle;
 	private Boolean wasStarted = false;
+	private String phrase = "";		Rectangle head = new Rectangle();
+	Rectangle body;
+	Rectangle rightArm;
+	Rectangle leftArm;
+	Rectangle leftLeg;
+	Rectangle rightLeg;
 
 	public Hangman(String filePath, User user) {
 		super(filePath, PuzzleType.HANGMAN, user);
@@ -57,7 +63,7 @@ public class Hangman extends Puzzle implements ISolveable {
 	}
 
 	private void createPuzzle() {
-		gameLogic.game();
+		gameLogic.game(gameMode, phrase);
 		puzzle = new Text(gameLogic.printGuesses());
 		guessBox = new TextField();
 		guessBox.lengthProperty().addListener(new ChangeListener<Number>() {
@@ -99,23 +105,56 @@ public class Hangman extends Puzzle implements ISolveable {
 	protected void checkGuess() {
 		if (gameLogic.checkGuess()) {
 			puzzle.setText(gameLogic.printGuesses());
+			drawMan(gameLogic.getTries());
 		} else {
-			hangman.getChildren().remove(guessBox);
-			puzzle.setText("The answer was " + "\" " + gameLogic.showAnswer() + "\"" + "\nYou guessed: "
-					+ gameLogic.getAllGuesses().trim());
-			puzzle.setTranslateY(470);
+			showSolution();
+		}
+	}
+	
+	private void drawMan(int losses) {
+		switch (losses) {
+		case 6:
+			hangman.getChildren().remove(rightLeg);
+		case 5:
+			hangman.getChildren().remove(leftLeg);
+		case 4:
+			hangman.getChildren().remove(rightArm);
+		case 3:
+			hangman.getChildren().remove(leftArm);
+		case 2:
+			hangman.getChildren().remove(body);
+		case 1:
+			hangman.getChildren().remove(head);
 		}
 	}
 
 	private void startGame() {
 		Image gallowPic = new Image("File:Gallows.png");
+		Image hungmanPic = new Image("File:hungman.png");
 		ImageView gallows = new ImageView(gallowPic);
-		hangman.getChildren().add(gallows);
+		ImageView hungman = new ImageView(hungmanPic);head = new Rectangle();
+		head = new Rectangle(575, 31, 60, 116);
+		body = new Rectangle(575, 147, 52, 87);
+		rightArm = new Rectangle(555, 150, 20, 80);
+		leftArm = new Rectangle(627, 157, 15, 73);
+		leftLeg = new Rectangle(595, 230, 40, 90);
+		rightLeg = new Rectangle(555, 230, 40, 90);
+		head.setId("cover");
+		body.setId("cover");
+		rightArm.setId("cover");
+		leftArm.setId("cover");
+		rightLeg.setId("cover");
+		leftLeg.setId("cover");
+		hangman.getChildren().addAll(gallows, hungman, head, body, rightArm, leftArm, leftLeg, rightLeg);
 
 		gallows.setFitHeight(500);
 		gallows.setPreserveRatio(true);
 		gallows.setTranslateY(-50);
 		gallows.setTranslateX(250);
+		hungman.setFitHeight(250);
+		hungman.setPreserveRatio(true);
+		hungman.setTranslateY(75);
+		hungman.setTranslateX(535);
 		createPuzzle();
 	}
 
@@ -137,7 +176,7 @@ public class Hangman extends Puzzle implements ISolveable {
 			public void handle(ActionEvent event) {
 				gameMode = 2;
 				wasStarted = true;
-				resetStage(false);
+				getPhrase();
 			}
 		});
 		hangman.getChildren().addAll(button1, button2);
@@ -147,13 +186,33 @@ public class Hangman extends Puzzle implements ISolveable {
 		button2.setTranslateY(200);
 	}
 
+	private void getPhrase() {
+		hangman.getChildren().clear();
+		LimitedTextField phraseBox = new LimitedTextField();
+		phraseBox.setMaxLength(35);
+		phraseBox.setId("phraseBox");
+		phraseBox.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				if (phraseBox.getText().trim().length() >= 1) {
+					phrase = phraseBox.getText();
+					resetStage(false);
+				}
+			}
+		});
+
+		hangman.getChildren().add(phraseBox);
+		phraseBox.setTranslateY(200);
+		phraseBox.setTranslateX(100);
+	}
+
 	private void drawGiveUpButton() {
 		display.getLeftSidebar().getChildren().remove(giveUp);
 		giveUp.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				showSolution();
-				isDone = true;
 			}
 		});
 		display.getLeftSidebar().getChildren().add(giveUp);
@@ -165,8 +224,12 @@ public class Hangman extends Puzzle implements ISolveable {
 
 	@Override
 	public void showSolution() {
-		// TODO Auto-generated method stub
-
+		hangman.getChildren().remove(guessBox);
+		puzzle.setText("The answer was " + "\" " + gameLogic.showAnswer() + "\"" + "\nYou guessed: "
+				+ gameLogic.getAllGuesses().trim());
+		puzzle.setTranslateY(470);
+		drawMan(6);
+		pauseTimer();
 	}
 
 	@Override
