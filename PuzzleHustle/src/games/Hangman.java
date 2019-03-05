@@ -196,6 +196,7 @@ public class Hangman extends Puzzle implements ISolveable {
 	private void getPhrase() {
 		hangman.getChildren().clear();
 		LimitedTextField phraseBox = new LimitedTextField();
+		phraseBox.setPromptText("Type the phrase to guess! (no more than 35 characters)");
 		phraseBox.setMaxLength(35);
 		phraseBox.setId("phraseBox");
 		phraseBox.setOnAction(new EventHandler<ActionEvent>() {
@@ -295,7 +296,7 @@ public class Hangman extends Puzzle implements ISolveable {
 		}
 		return scene;
 	}
-	
+
 	@Override
 	public void setScore(float score) {
 		this.score = score;
