@@ -16,7 +16,6 @@ public class HMLogic {
 			'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 	private String[] words = null;
 	private int count = 0;
-	private Boolean lost = false;
 
 	private void createDictionary() {
 		String text = "";
@@ -41,12 +40,9 @@ public class HMLogic {
 		createDictionary();
 		Random rng = new Random();
 		int index = rng.nextInt(words.length);
-		for (int i = 0; i < words.length; i++) {
-			System.out.println(i + ": " + words[i]);
-		}
-		return words[41];
+		return words[index];
 	}
-	
+
 	public String showAnswer() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < phraseChars.length; i++) {
@@ -54,22 +50,26 @@ public class HMLogic {
 		}
 		return sb.toString();
 	}
-	
+
 	public String getAllGuesses() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < correctGuesses2.length; i++) {
 			if (correctGuesses2[i] != ' ') {
-				sb.append(correctGuesses2[i] + " ");				
+				sb.append(correctGuesses2[i] + " ");
 			}
 		}
 		for (int i = 0; i < wrongGuesses.length; i++) {
 			sb.append(wrongGuesses[i] + " ");
 		}
-		return sb.toString();	
+		return sb.toString();
 	}
 
-	public void game() {
-		phrase = getRandomThing();
+	public void game(int gameMode, String newPhrase) {
+		if (gameMode == 1) {
+			this.phrase = getRandomThing();
+		} else {
+			phrase = newPhrase;
+		}
 
 		phraseChars = new char[phrase.length()];
 		correctGuesses = new char[phrase.length()];
@@ -93,20 +93,19 @@ public class HMLogic {
 	}
 
 	public boolean checkGuess() {
-		if (wrongGuesses[5] == 0) {
 
-			if (((arrContainsLetter(correctGuesses) || (arrContainsLetter(wrongGuesses))))) {
-				count -= 1;
-			} else if (!arrContainsLetter(phraseChars)) {
-				wrongGuesses[count] = guess;
-			} else if (arrContainsLetter(phraseChars)) {
-				count--;
-			}
-			count++;
-			return true;
-		} else {
+		if (((arrContainsLetter(correctGuesses) || (arrContainsLetter(wrongGuesses))))) {
+			count--;
+		} else if (!arrContainsLetter(phraseChars)) {
+			wrongGuesses[count] = guess;
+		} else if (arrContainsLetter(phraseChars)) {
+			count--;
+		}
+		count++;
+		if (count >= 6) {
 			return false;
 		}
+		return true;
 	}
 
 	private boolean arrContainsLetter(char[] array) {
@@ -198,11 +197,10 @@ public class HMLogic {
 		sb.append("\n");
 		return sb.toString();
 	}
-	
-	public Boolean isLost() {
-		return lost;
-	}
 
+	public int getTries() {
+		return count;
+	}
 //	private boolean checkIfWon() {
 //		boolean won = false;
 //		for (int i = 0; i < correctGuesses.length; i++) {
