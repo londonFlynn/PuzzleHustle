@@ -105,8 +105,8 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 		boardView.setAlignment(Pos.CENTER);
 		boardView.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		boardView.setMinSize(50 * cellLength * cellLength + 2, 50 * cellLength * cellLength + 2);
-		boardView.setMaxSize(50 * cellLength * cellLength + 2, 50 * cellLength * cellLength + 2);
+		boardView.setMinSize(53 * cellLength * cellLength + 2, 53 * cellLength * cellLength + 2);
+		boardView.setMaxSize(53 * cellLength * cellLength + 2, 53 * cellLength * cellLength + 2);
 		for (int i = 0; i < cellLength; i++) {
 			HBox row = new HBox();
 			row.setAlignment(Pos.CENTER);
@@ -114,10 +114,10 @@ public class Sudoku extends Puzzle implements ISolveable, Serializable {
 				VBox masterCell = new VBox();
 				masterCell.setAlignment(Pos.CENTER);
 				masterCell.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
-						CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+						CornerRadii.EMPTY, BorderStroke.THICK)));
 				masterCell.setPadding(new Insets(10, 10, 10, 10));
-				masterCell.setMinSize(50 * cellLength, 50 * cellLength);
-				masterCell.setMaxSize(50 * cellLength, 50 * cellLength);
+				masterCell.setMinSize(53 * cellLength, 53 * cellLength);
+				masterCell.setMaxSize(53 * cellLength, 53 * cellLength);
 				for (int k = 0; k < cellLength; k++) {
 					HBox cellRow = new HBox();
 					cellRow.setAlignment(Pos.CENTER);
