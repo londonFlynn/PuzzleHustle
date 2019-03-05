@@ -16,6 +16,7 @@ public class HMLogic {
 			'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 	private String[] words = null;
 	private int count = 0;
+	private int score = 0;
 
 	private void createDictionary() {
 		String text = "";
@@ -97,8 +98,10 @@ public class HMLogic {
 		if (((arrContainsLetter(correctGuesses) || (arrContainsLetter(wrongGuesses))))) {
 			count--;
 		} else if (!arrContainsLetter(phraseChars)) {
+			score--;
 			wrongGuesses[count] = guess;
 		} else if (arrContainsLetter(phraseChars)) {
+			score++;
 			count--;
 		}
 		count++;
@@ -200,6 +203,10 @@ public class HMLogic {
 
 	public int getTries() {
 		return count;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 
 	public boolean checkIfWon() {
