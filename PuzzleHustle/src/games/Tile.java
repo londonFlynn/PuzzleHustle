@@ -45,21 +45,21 @@ public class Tile {
 	private HashMap<String,String> initColorMap() {
 		HashMap<String,String> returnMap = new HashMap<>();
 		returnMap.put("" + 0, "-fx-background-color: #fff;" + fontSize + fontWeight);
-		returnMap.put("" + 2, "-fx-background-color: #fffac8;" + fontSize + fontWeight);
-		returnMap.put("" + 4, "-fx-background-color: #ffd8b1;"+ fontSize + fontWeight);
-		returnMap.put("" + 8, "-fx-background-color: #fabebe;"+ fontSize + fontWeight);
-		returnMap.put("" + 16, "-fx-background-color: #ffe119;"+ fontSize + fontWeight);
-		returnMap.put("" + 32, "-fx-background-color: #f58231;"+ fontSize + fontWeight);
-		returnMap.put("" + 64, "-fx-background-color: #e6194B;"+ fontSize + fontWeight);
-		returnMap.put("" + 128, "-fx-background-color: #f032e6;"+ fontSize + fontWeight);
-		returnMap.put("" + 256, "-fx-background-color: #a0a2f6;"+ fontSize + fontWeight);
-		returnMap.put("" + 512, "-fx-background-color: #4363d8;"+ fontSize + fontWeight);
-		returnMap.put("" + 1024, "-fx-background-color: #000075;"+ "-fx-font-size: 40px;" + fontWeight);
-		returnMap.put("" + 2048, "-fx-background-color: #469990;"+ "-fx-font-size: 40px;" + fontWeight);
-		returnMap.put("" + 4096, "-fx-background-color: #333;"+ "-fx-font-size: 40px;" + "-fx-text-fill: #fff;" + fontWeight);
-		returnMap.put("" + 8192, "-fx-background-color: #222;"+ "-fx-font-size: 40px;" + "-fx-text-fill: #fff;" + fontWeight);
-		returnMap.put("" + 16384, "-fx-background-color: #111;"+ "-fx-font-size: 30px;" + "-fx-text-fill: #fff;" + fontWeight);
-		returnMap.put("" + 32768, "-fx-background-color: #000;"+ "-fx-font-size: 30px;" + "-fx-text-fill: #fff;" + fontWeight);
+		returnMap.put("" + 2, "-fx-background-color: #ede1c9;" + fontSize + fontWeight+ "-fx-text-fill: #776d64;");
+		returnMap.put("" + 4, "-fx-background-color: #ede1c9;"+ fontSize + fontWeight+ "-fx-text-fill: #776d64;");
+		returnMap.put("" + 8, "-fx-background-color: #f2b179;"+ fontSize + fontWeight+ "-fx-text-fill: #f6ead4;");
+		returnMap.put("" + 16, "-fx-background-color: #f49663;"+ fontSize + fontWeight+ "-fx-text-fill: #f6ead4;");
+		returnMap.put("" + 32, "-fx-background-color: #f47d5f;"+ fontSize + fontWeight+ "-fx-text-fill: #f6ead4;");
+		returnMap.put("" + 64, "-fx-background-color: #f75e3e;"+ fontSize + fontWeight+ "-fx-text-fill: #f6ead4;");
+		returnMap.put("" + 128, "-fx-background-color: #ebce70;"+ fontSize + fontWeight+ "-fx-text-fill: #f6ead4;");
+		returnMap.put("" + 256, "-fx-background-color: #eccb60;"+ fontSize + fontWeight+ "-fx-text-fill: #f6ead4;");
+		returnMap.put("" + 512, "-fx-background-color: #eac74f;"+ fontSize + fontWeight+ "-fx-text-fill: #f6ead4;");
+		returnMap.put("" + 1024, "-fx-background-color: #ebc540;"+ "-fx-font-size: 40px;" + fontWeight);
+		returnMap.put("" + 2048, "-fx-background-color: #eec02f;"+ "-fx-font-size: 40px;" + fontWeight);
+		returnMap.put("" + 4096, "-fx-background-color: #ee676b;"+ "-fx-font-size: 40px;" + "-fx-text-fill: #f6ead4;" + fontWeight);
+		returnMap.put("" + 8192, "-fx-background-color: #ed4c5b;"+ "-fx-font-size: 40px;" + "-fx-text-fill: #f6ead4;" + fontWeight);
+		returnMap.put("" + 16384, "-fx-background-color: #1882cc;"+ "-fx-font-size: 30px;" + "-fx-text-fill: #f6ead4;" + fontWeight);
+		returnMap.put("" + 32768, "-fx-background-color: #73b4d2;"+ "-fx-font-size: 30px;" + "-fx-text-fill: #f6ead4;" + fontWeight);
 		return returnMap;
 	}
 	@Override
