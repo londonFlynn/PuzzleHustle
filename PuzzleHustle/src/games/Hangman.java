@@ -38,6 +38,7 @@ public class Hangman extends Puzzle implements ISolveable {
 	private ImageView gallows;
 	private ImageView hungman;
 	private boolean wasWon = false;
+	private int difficulty;
 
 	public Hangman(String filePath, User user) {
 		super(filePath, PuzzleType.HANGMAN, user);
@@ -66,7 +67,7 @@ public class Hangman extends Puzzle implements ISolveable {
 	}
 
 	private void createPuzzle() {
-		gameLogic.game(gameMode, phrase);
+		gameLogic.game(gameMode, difficulty, phrase);
 		puzzle = new Text(gameLogic.printGuesses());
 		guessBox = new TextField();
 		guessBox.lengthProperty().addListener(new ChangeListener<Number>() {
@@ -106,6 +107,52 @@ public class Hangman extends Puzzle implements ISolveable {
 		puzzle.setId("puzzle");
 		puzzle.setTranslateY(420);
 		puzzle.setTranslateX(10);
+	}
+
+	private void createDifficultyPage() {
+		hangman.getChildren().clear();
+		Label menuMessage = new Label();
+		menuMessage.setText("Please choose a difficulty");
+		menuMessage.setId("message");
+		Button button1 = new Button("Easy");
+		Button button2 = new Button("Medium");
+		Button button3 = new Button("Hard");
+		button1.setId("difficultyButton");
+		button2.setId("difficultyButton");
+		button2.setId("difficultyButton");
+		button1.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				difficulty = 1;
+				wasStarted = true;
+				resetStage(false);
+			}
+		});
+		button2.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				difficulty = 2;
+				wasStarted = true;
+				resetStage(false);
+			}
+		});
+		button3.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				difficulty = 3;
+				wasStarted = true;
+				resetStage(false);
+			}
+		});
+		hangman.getChildren().addAll(button1, button2, button3, menuMessage);
+		menuMessage.setTranslateX(200);
+		menuMessage.setTranslateY(100);
+		button1.setTranslateX(205);
+		button1.setTranslateY(250);
+		button2.setTranslateX(405);
+		button2.setTranslateY(250);
+		button3.setTranslateX(605);
+		button3.setTranslateY(250);
 	}
 
 	protected void checkGuess() {
@@ -176,8 +223,7 @@ public class Hangman extends Puzzle implements ISolveable {
 			@Override
 			public void handle(ActionEvent event) {
 				gameMode = 1;
-				wasStarted = true;
-				resetStage(false);
+				createDifficultyPage();
 			}
 		});
 		button2.setOnAction(new EventHandler<ActionEvent>() {
