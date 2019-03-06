@@ -35,6 +35,8 @@ public class Hangman extends Puzzle implements ISolveable {
 	private Rectangle leftArm;
 	private Rectangle leftLeg;
 	private Rectangle rightLeg;
+	private ImageView gallows;
+	private ImageView hungman;
 	private boolean wasWon = false;
 
 	public Hangman(String filePath, User user) {
@@ -136,8 +138,8 @@ public class Hangman extends Puzzle implements ISolveable {
 	private void startGame() {
 		Image gallowPic = new Image("File:Gallows.png");
 		Image hungmanPic = new Image("File:hungman.png");
-		ImageView gallows = new ImageView(gallowPic);
-		ImageView hungman = new ImageView(hungmanPic);
+		gallows = new ImageView(gallowPic);
+		hungman = new ImageView(hungmanPic);
 		head = new Rectangle();
 		head = new Rectangle(575, 31, 60, 116);
 		body = new Rectangle(575, 147, 52, 87);
@@ -226,10 +228,6 @@ public class Hangman extends Puzzle implements ISolveable {
 		display.getLeftSidebar().getChildren().add(giveUp);
 	}
 
-	private void drawStats() {
-
-	}
-
 	private void gameWon() {
 		wasWon = true;
 		showSolution();
@@ -272,7 +270,11 @@ public class Hangman extends Puzzle implements ISolveable {
 	public void hideInstructions() {
 		if (wasStarted) {
 			hangman.getChildren().clear();
-			resetStage(false);
+			puzzle.setText(gameLogic.printGuesses());
+			drawMan(gameLogic.getTries());
+			hangman.getChildren().addAll(gallows, hungman, head, body, rightArm, leftArm, leftLeg, rightLeg, puzzle,
+					guessBox);
+			drawMan(gameLogic.getTries());
 		} else {
 			hangman.getChildren().clear();
 			resetStage(true);
@@ -282,7 +284,6 @@ public class Hangman extends Puzzle implements ISolveable {
 	@Override
 	protected void setupPuzzlePane() {
 		hangman = new Pane();
-		drawStats();
 		resetStage(true);
 		puzzlePane.getChildren().add(hangman);
 		puzzlePane.getStylesheets().add("views/HM.css");
