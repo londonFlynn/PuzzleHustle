@@ -819,7 +819,6 @@ service
 set
 seven
 several
-sex
 sexual
 shake
 share
@@ -849,7 +848,6 @@ skill
 skin
 small
 smile
-so
 social
 society
 soldier
@@ -1005,7 +1003,6 @@ war
 watch
 water
 way
-we
 weapon
 wear
 week
