@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,7 +55,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		hubName.getStyleClass().add("nameLabel");
 		hubName.setAlignment(Pos.CENTER);
 		display.getName().getChildren().add(hubName);
-		display.getNavigation().getChildren().addAll(mainMenuButton(), exitButton());
+		display.getNavigation().getChildren().addAll(mainMenuButton(), exitButton(), muteButton());
 		showMainMenu();
 		display.getMainView().setAlignment(Pos.TOP_CENTER);
 		setupUserFolder();
@@ -294,6 +295,18 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 			}
 		});
 		return menu;
+	}
+	
+	private Button muteButton() {
+		Button muteButton = new Button("Mute");
+		muteButton.setMinSize(100, 40);
+		muteButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				MusicManager.muteMusic();
+			}
+		});
+		return muteButton;
 	}
 
 	private Button selectUserMenuButton() {
