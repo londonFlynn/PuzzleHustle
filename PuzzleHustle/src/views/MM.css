@@ -20,3 +20,8 @@
 	-fx-fill: white;
 	-fx-font-size: 12pt;	
 }
+#endMessage {
+	-fx-background-color: #00a5f0;
+	-fx-font-size: 38pt;
+	-fx-text-fill: black;
+}
