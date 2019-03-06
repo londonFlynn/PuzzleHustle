@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -15,7 +16,6 @@ import javafx.scene.text.Text;
 import models.Puzzle;
 import models.User;
 
-//NewPuzzlePublisher, Serializable, IExitable
 @SuppressWarnings("serial")
 public class MasterMind extends Puzzle implements ISolveable {
 	public MasterMind(String filePath, User user) {
@@ -31,6 +31,8 @@ public class MasterMind extends Puzzle implements ISolveable {
 	private Text stats;
 	private Button giveUp = new Button("Give Up");
 	private boolean isDone = false;
+	private boolean isWon = false;
+	Label endMessage = new Label();
 
 	private void drawStats() {
 		stats = new Text("Correct Color, Wrong Space: " + gameLogic.getRightColors() + "\nCorrect Color, Right Space: "
@@ -38,6 +40,14 @@ public class MasterMind extends Puzzle implements ISolveable {
 		stats.setX(10);
 		stats.setY(20);
 		stats.setId("stats");
+	}
+
+	private void gameWon() {
+		isDone = true;
+		isWon = true;
+		setScore(gameLogic.getGuessesLeft());
+		showSolution();
+		setSolved(true);
 	}
 
 	private void resetStage(Boolean drawSquares) {
@@ -90,11 +100,14 @@ public class MasterMind extends Puzzle implements ISolveable {
 		errorMessage.setY(250);
 		gameLogic.checkGuess(squares);
 		if (gameLogic.canCheck()) {
-			if (gameLogic.checkIfWon(squares)) {
-				setSolved(true);
+			if (gameLogic.getRightSpots() == 6) {
+				gameWon();
+			} else if (gameLogic.getGuessesLeft() == 0) {
+				showSolution();
 			} else {
 				resetStage(false);
 			}
+
 		} else {
 			errorMessage.setVisible(true);
 		}
@@ -214,6 +227,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	@Override
 	public void showInstructions() {
+		pauseTimer();
 		masterMind.getChildren().clear();
 		Text instructions = new Text("Drag the colored circles to the squares to color them. After "
 				+ "coloring all of the squares, you can check your guess. The "
@@ -230,6 +244,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	@Override
 	public void hideInstructions() {
+		startTimer();
 		if (!isDone) {
 			masterMind.getChildren().clear();
 			resetStage(true);
@@ -240,6 +255,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	@Override
 	protected void setupPuzzlePane() {
+		startTimer();
 		masterMind = new Pane();
 		resetStage(true);
 		drawStats();
@@ -250,13 +266,23 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	@Override
 	public void showSolution() {
+		endMessage.setTranslateX(380);
+		endMessage.setTranslateY(250);
+		endMessage.setId("endMessage");
+		if (isWon) {
+			endMessage.setText("You WON!!");
+		} else {
+			endMessage.setText("You Lose");
+		}
 		masterMind.getChildren().clear();
 		drawSquares();
+		masterMind.getChildren().addAll(squares);
+		masterMind.getChildren().add(endMessage);
 		Color[] answer = gameLogic.getAnswer();
 		for (int i = 0; i < squares.length; i++) {
 			squares[i].setFill(answer[i]);
 		}
-		masterMind.getChildren().addAll(squares);
+		pauseTimer();
 	}
 
 	@Override
@@ -267,5 +293,14 @@ public class MasterMind extends Puzzle implements ISolveable {
 		}
 		return scene;
 	}
-}
 
+	@Override
+	public void setScore(float score) {
+		this.score = score;
+		if (score > user.getHighScore(PUZZLE_TYPE) && isWon) {
+			user.setHighScore(PUZZLE_TYPE, score);
+			highScoreLabel.textProperty().set("High Score: " + user.getHighScore(PUZZLE_TYPE));
+		}
+		scoreLabel.textProperty().set("Score: " + getScore());
+	}
+}
