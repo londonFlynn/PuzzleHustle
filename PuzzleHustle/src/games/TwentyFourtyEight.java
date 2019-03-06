@@ -2,6 +2,7 @@ package games;
 
 import java.util.Random;
 
+import controllers.MusicManager;
 import enums.PuzzleType;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
@@ -84,15 +85,27 @@ public class TwentyFourtyEight extends Puzzle {
 				if (e.getCode() == KeyCode.A) {
 					valueCheck = copiedValues();
 					swipeLeft();
+					if(hasChanged()) {
+						MusicManager.playSlide();
+					}
 				} else if (e.getCode() == KeyCode.D) {
 					valueCheck = copiedValues();
 					swipeRight();
+					if(hasChanged()) {
+						MusicManager.playSlide();
+					}
 				} else if (e.getCode() == KeyCode.W) {
 					valueCheck = copiedValues();
 					swipeUp();
+					if(hasChanged()) {
+						MusicManager.playSlide();
+					}
 				} else if (e.getCode() == KeyCode.S) {
 					valueCheck = copiedValues();
 					swipeDown();
+					if(hasChanged()) {
+						MusicManager.playSlide();
+					}
 				}
 			});
 		} catch (Exception e) {
@@ -401,6 +414,7 @@ public class TwentyFourtyEight extends Puzzle {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				if (tiles[i][j].getValue() == 0) {
+					MusicManager.playSpawn();
 					hasOpenSlot = true;
 					break;
 				}
