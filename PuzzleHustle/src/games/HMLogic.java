@@ -65,9 +65,25 @@ public class HMLogic {
 		return sb.toString();
 	}
 
-	public void game(int gameMode, String newPhrase) {
+	public void game(int gameMode, int difficulty, String newPhrase) {
 		if (gameMode == 1) {
-			this.phrase = getRandomThing();
+			boolean valid = false;
+			do {
+				this.phrase = getRandomThing();
+				if (difficulty == 1) {
+					if (this.phrase.length() <= 5) {
+						valid = true;
+					}
+				} else if (difficulty == 2) {
+					if (this.phrase.length() > 5 && this.phrase.length() <= 14) {
+						valid = true;
+					}
+				} else {
+					if (this.phrase.length() > 13) {
+						valid = true;
+					}
+				}
+			} while (!valid);
 		} else {
 			phrase = newPhrase;
 		}
@@ -204,7 +220,7 @@ public class HMLogic {
 	public int getTries() {
 		return count;
 	}
-	
+
 	public int getScore() {
 		return score;
 	}
