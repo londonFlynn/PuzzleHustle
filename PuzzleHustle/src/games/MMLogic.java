@@ -28,6 +28,7 @@ public class MMLogic implements Serializable {
 		for (int i = 0; i < 6; i++) {
 			int ranNum = rng.nextInt(colors.length);
 			puzzle[i] = colors[ranNum];
+//			puzzle[i] = Color.RED;
 		}
 		for (int i = 0; i < 6; i++) {
 			System.out.println(colors[i]);
@@ -60,6 +61,9 @@ public class MMLogic implements Serializable {
 					}
 				}
 			}
+			if (rightSpots == 6) {
+				guessesLeft++;
+			}
 			guessesLeft--;
 		}
 	}
@@ -72,15 +76,6 @@ public class MMLogic implements Serializable {
 				break;
 			}
 		}
-	}
-
-	public boolean checkIfWon(Rectangle[] squares) {
-		for (int i = 0; i < squares.length; i++) {
-			if (squares[i].getFill() != puzzle[i]) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public int getRightSpots() {
@@ -103,4 +98,3 @@ public class MMLogic implements Serializable {
 		return canCheck;
 	}
 }
-
