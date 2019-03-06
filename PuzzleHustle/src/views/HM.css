@@ -18,7 +18,8 @@
 	-fx-max-height: 50px;
 	-fx-max-width: 150px;
 }
-#message {
+#message,
+#message3 {
 	-fx-background-color: #00a5f0;
 	-fx-font-size: 38pt;
 	-fx-text-fill: black;
