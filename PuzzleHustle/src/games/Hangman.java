@@ -240,13 +240,20 @@ public class Hangman extends Puzzle implements ISolveable {
 
 	@Override
 	public void showSolution() {
+		Label menuMessage3 = new Label();
+		menuMessage3.setText("You WON!!");
+		menuMessage3.setId("message3");
+		menuMessage3.setTranslateX(130);
+		menuMessage3.setTranslateY(150);
 		hangman.getChildren().remove(guessBox);
 		puzzle.setText("The answer was " + "\" " + gameLogic.showAnswer() + "\"" + "\nYou guessed: "
 				+ gameLogic.getAllGuesses().trim());
 		puzzle.setTranslateY(470);
 		if (!wasWon) {
 			drawMan(6);
+			menuMessage3.setText("You lose");
 		}
+		hangman.getChildren().add(menuMessage3);
 		pauseTimer();
 	}
 
