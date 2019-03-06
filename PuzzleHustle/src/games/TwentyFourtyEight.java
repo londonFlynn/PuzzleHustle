@@ -172,8 +172,10 @@ public class TwentyFourtyEight extends Puzzle {
 							tArr[i].setValue(0);
 							addScore(tArr[i - 1].getValue() + tArr[i].getValue());
 							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tArr[i-1].getLabel());
-							transition.setFromY(.7);
+							transition.setFromY(1.2);
 							transition.setToY(1);
+							transition.setFromX(1.2);
+							transition.setToX(1);
 							transition.play();
 							fillUp();
 						} else if (tArr[i - 1].getValue() == 0) {
@@ -204,8 +206,10 @@ public class TwentyFourtyEight extends Puzzle {
 							tArr[i].setValue(0);
 							addScore(tArr[i + 1].getValue() + tArr[i].getValue());
 							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tArr[i+1].getLabel());
-							transition.setFromY(.7);
+							transition.setFromY(1.2);
 							transition.setToY(1);
+							transition.setFromX(1.2);
+							transition.setToX(1);
 							transition.play();
 							fillDown();
 						} else if (tArr[i + 1].getValue() == 0) {
@@ -236,7 +240,9 @@ public class TwentyFourtyEight extends Puzzle {
 							tiles[j][i].setValue(0);
 							addScore(tiles[j - 1][i].getValue() + tiles[j][i].getValue());
 							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j-1][i].getLabel());
-							transition.setFromX(.7);
+							transition.setFromY(1.2);
+							transition.setToY(1);
+							transition.setFromX(1.2);
 							transition.setToX(1);
 							transition.play();
 							fillLeft();
@@ -268,17 +274,16 @@ public class TwentyFourtyEight extends Puzzle {
 							tiles[j][i].setValue(0);
 							addScore(tiles[j + 1][i].getValue() + tiles[j][i].getValue());
 							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j+1][i].getLabel());
-							transition.setFromX(.7);
+							transition.setFromY(1.2);
+							transition.setToY(1);
+							transition.setFromX(1.2);
+							transition.setToX(1);
 							transition.setToX(1);
 							transition.play();
 							fillRight();
 						} else if (tiles[j + 1][i].getValue() == 0) {
 							tiles[j + 1][i].setValue(tiles[j][i].getValue());
 							tiles[j][i].setValue(0);
-							ScaleTransition transition = new ScaleTransition(Duration.seconds(.2),tiles[j][i].getLabel());
-							transition.setFromX(.7);
-							transition.setToX(1);
-							transition.play();
 							fillRight();
 						}
 					}
