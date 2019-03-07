@@ -8,8 +8,6 @@ import javafx.scene.media.MediaPlayer;
 public class MusicManager {
 	private static MediaPlayer musicPlayer;
 	private static MediaPlayer soundPlayer;
-	private static MediaPlayer slidePlayer;
-	private static MediaPlayer spawnPlayer;
 	private static boolean isMuted = false;
 
 	public static void startMusic() {
@@ -37,22 +35,6 @@ public class MusicManager {
 		soundPlayer = new MediaPlayer(sound);
 		if (!isMuted) {
 			soundPlayer.play();
-		}
-	}
-	public static void playSlide() {
-		String musicFile = "slide.wav";
-		Media sound = new Media(new File(musicFile).toURI().toString());
-		slidePlayer = new MediaPlayer(sound);
-		if (!isMuted) {
-			slidePlayer.play();
-		}
-	}
-	public static void playSpawn() {
-		String musicFile = "spawn.wav";
-		Media sound = new Media(new File(musicFile).toURI().toString());
-		spawnPlayer = new MediaPlayer(sound);
-		if (!isMuted) {
-			spawnPlayer.play();
 		}
 	}
 }
