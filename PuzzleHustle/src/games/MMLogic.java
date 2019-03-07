@@ -8,33 +8,36 @@ import javafx.scene.shape.Rectangle;
 
 @SuppressWarnings("serial")
 public class MMLogic implements Serializable {
-	private Color[] colors = { Color.RED, Color.BLUE, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.PURPLE };
+	private Color[] colors = { Color.RED, Color.BLUE, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.PURPLE,
+			Color.CHOCOLATE, Color.HOTPINK, Color.BISQUE };
 	private Color[] puzzle = new Color[colors.length];
 	private int rightSpots = 0;
 	private int rightColors = 0;
 	private int guessesLeft = 20;
 	private boolean canCheck;
+	int length = 0;
 
 	public Color[] getAnswer() {
-		Color[] tempArr = new Color[puzzle.length];
-		for (int i = 0; i < puzzle.length; i++) {
+		Color[] tempArr = new Color[length];
+		for (int i = 0; i < length; i++) {
 			tempArr[i] = puzzle[i];
 		}
 		return tempArr;
 	}
 
-	public void createPuzzle() {
+	public void createPuzzle(int length) {
+		this.length = length;
 		Random rng = new Random();
-		for (int i = 0; i < 6; i++) {
-			int ranNum = rng.nextInt(colors.length);
+		for (int i = 0; i < length; i++) {
+			int ranNum = rng.nextInt(length);
 			puzzle[i] = colors[ranNum];
 //			puzzle[i] = Color.RED;
 		}
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < length; i++) {
 			System.out.println(colors[i]);
 		}
 		System.out.println("\n");
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < length; i++) {
 			System.out.println(puzzle[i]);
 		}
 
@@ -61,7 +64,7 @@ public class MMLogic implements Serializable {
 					}
 				}
 			}
-			if (rightSpots == 6) {
+			if (rightSpots == length) {
 				guessesLeft++;
 			}
 			guessesLeft--;
