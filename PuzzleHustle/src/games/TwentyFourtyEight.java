@@ -411,7 +411,6 @@ public class TwentyFourtyEight extends Puzzle {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				if (tiles[i][j].getValue() == 0) {
-					MusicManager.playSpawn();
 					hasOpenSlot = true;
 					break;
 				}
