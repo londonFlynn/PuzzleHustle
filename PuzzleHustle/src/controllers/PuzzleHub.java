@@ -154,6 +154,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 	private ListView<Button> getUserButtons() {
 		ListView<Button> list = new ListView<Button>();
 		if (users.size() != 0) {
+			MusicManager.playSquish();
 			User[] allUsers = new User[users.size()];
 			ObservableList<Button> items = FXCollections
 					.observableArrayList(selectUserButton(users.values().toArray(allUsers)[0]));
@@ -279,6 +280,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				exit();
 			}
 		});
@@ -291,6 +293,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				showMainMenu();
 			}
 		});
@@ -303,6 +306,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		muteButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				MusicManager.muteMusic();
 			}
 		});
@@ -315,6 +319,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				showSelectUserMenu();
 			}
 		});
@@ -327,6 +332,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				login();
 			}
 		});
@@ -339,6 +345,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				createNewUser();
 			}
 		});
@@ -351,6 +358,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				showUserStats();
 			}
 		});
@@ -411,6 +419,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				submitName();
 			}
 		});
@@ -423,6 +432,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				showSelectPuzzleMenu();
 			}
 		});
@@ -457,6 +467,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				setPuzzleChoice(PuzzleType.SUDOKU);
 				createNewPuzzle(puzzleChoice);
 			}
@@ -470,6 +481,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				setPuzzleChoice(PuzzleType.MASTERMIND);
 				createNewPuzzle(puzzleChoice);
 			}
@@ -483,6 +495,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				setPuzzleChoice(PuzzleType.MINESWEEPER);
 				createNewPuzzle(puzzleChoice);
 			}
@@ -509,6 +522,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
 				setPuzzleChoice(PuzzleType.TWO048);
 				createNewPuzzle(puzzleChoice);
 			}
