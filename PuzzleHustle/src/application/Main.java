@@ -52,23 +52,6 @@ public class Main extends Application {
 		primaryStage.setMinHeight(primaryStage.getHeight());
 		primaryStage.setMaxWidth(primaryStage.getWidth());
 		primaryStage.setMaxHeight(primaryStage.getHeight());
-		primaryStage.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-				EventTarget target = mouseEvent.getTarget();
-				System.out.println(target);
-				if (target instanceof Node) {
-					Node targetNode = (Node) target;
-
-					while (targetNode != null && !(targetNode instanceof Button)) {
-						targetNode = targetNode.getParent();
-					}
-					if (target instanceof Button || targetNode instanceof Button) {
-						MusicManager.playSquish();
-					}
-				}
-			}
-		});
 	}
 
 	public static void main(String[] args) {
