@@ -312,7 +312,9 @@ public class Hangman extends Puzzle implements ISolveable {
 		Text instructions = new Text("Type your guessed character in the box. "
 				+ "After guessing, your guess will either show up under the \""
 				+ "correct guesses so far\" section, or \nthe \"wrong guesses so "
-				+ "far\" section. If you guess incorrectly 6 times, you lose. " + "Guess every character to win!");
+				+ "far\" section. If you guess incorrectly 6 times, you lose. " + "Guess every character to win!"
+				+ "\n\nScoring is based on how many correct and incorrect guesses were made."
+				+ "\nFor each correct guess, 1 point is added. For each incorrect guess, 1 point is removed.");
 		instructions.setId("instructions");
 		instructions.setY(100);
 		instructions.setX(10);
@@ -321,12 +323,16 @@ public class Hangman extends Puzzle implements ISolveable {
 
 	@Override
 	public void hideInstructions() {
+		hangman.getChildren().clear();
 		if (wasStarted) {
-			hangman.getChildren().clear();
-			puzzle.setText(gameLogic.printGuesses());
+			if (wasWon) {
+				showSolution();
+			} else {
+				puzzle.setText(gameLogic.printGuesses());
+				hangman.getChildren().add(guessBox);
+			}
 			drawMan(gameLogic.getTries());
-			hangman.getChildren().addAll(gallows, hungman, head, body, rightArm, leftArm, leftLeg, rightLeg, puzzle,
-					guessBox);
+			hangman.getChildren().addAll(gallows, hungman, head, body, rightArm, leftArm, leftLeg, rightLeg, puzzle);
 			drawMan(gameLogic.getTries());
 		} else {
 			hangman.getChildren().clear();
