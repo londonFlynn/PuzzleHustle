@@ -85,27 +85,19 @@ public class TwentyFourtyEight extends Puzzle {
 				if (e.getCode() == KeyCode.A) {
 					valueCheck = copiedValues();
 					swipeLeft();
-					if(hasChanged()) {
-						MusicManager.playSlide();
-					}
+					
 				} else if (e.getCode() == KeyCode.D) {
 					valueCheck = copiedValues();
 					swipeRight();
-					if(hasChanged()) {
-						MusicManager.playSlide();
-					}
+					
 				} else if (e.getCode() == KeyCode.W) {
 					valueCheck = copiedValues();
 					swipeUp();
-					if(hasChanged()) {
-						MusicManager.playSlide();
-					}
+					
 				} else if (e.getCode() == KeyCode.S) {
 					valueCheck = copiedValues();
 					swipeDown();
-					if(hasChanged()) {
-						MusicManager.playSlide();
-					}
+					
 				}
 			});
 		} catch (Exception e) {
