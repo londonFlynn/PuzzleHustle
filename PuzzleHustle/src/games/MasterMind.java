@@ -23,16 +23,19 @@ public class MasterMind extends Puzzle implements ISolveable {
 	}
 
 	private MMLogic gameLogic = new MMLogic();
-	private Circle[] circles = new Circle[6];
-	private Color[] colors = { Color.RED, Color.BLUE, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.PURPLE };
-	private Rectangle[] squares = new Rectangle[6];
+	private Circle[] circles = null;
+	private Color[] colors = { Color.RED, Color.BLUE, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.PURPLE,
+			Color.CHOCOLATE, Color.HOTPINK, Color.BISQUE };
+	private Rectangle[] squares = null;
 	private double orgSceneX, orgSceneY;
 	private Pane masterMind = null;
 	private Text stats;
 	private Button giveUp = new Button("Give Up");
 	private boolean isDone = false;
 	private boolean isWon = false;
-	Label endMessage = new Label();
+	private int difficulty = 1;
+	private int length = 1;
+	private Label endMessage = new Label();
 
 	private void drawStats() {
 		stats = new Text("Correct Color, Wrong Space: " + gameLogic.getRightColors() + "\nCorrect Color, Right Space: "
@@ -45,7 +48,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 	private void gameWon() {
 		isDone = true;
 		isWon = true;
-		setScore(gameLogic.getGuessesLeft());
+		setScore(gameLogic.getGuessesLeft() * difficulty);
 		showSolution();
 		setSolved(true);
 	}
@@ -100,7 +103,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 		errorMessage.setY(250);
 		gameLogic.checkGuess(squares);
 		if (gameLogic.canCheck()) {
-			if (gameLogic.getRightSpots() == 6) {
+			if (gameLogic.getRightSpots() == length) {
 				gameWon();
 			} else if (gameLogic.getGuessesLeft() == 0) {
 				showSolution();
@@ -140,6 +143,11 @@ public class MasterMind extends Puzzle implements ISolveable {
 		} else if (circle.getFill() == Color.PURPLE) {
 			x += 250;
 		}
+		if (difficulty == 1) {
+			x += 75;
+		} else if (difficulty == 3) {
+			x -= 75;
+		}
 
 		Circle circle2 = new Circle(x, 350, 20, circle.getFill());
 		circle2.setCursor(Cursor.HAND);
@@ -178,6 +186,11 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	private void drawCircles() {
 		int xPos = 355;
+		if (difficulty == 1) {
+			xPos += 75;
+		} else if (difficulty == 3) {
+			xPos -= 75;
+		}
 		for (int i = 0; i < circles.length; i++) {
 			Circle circle = new Circle(xPos, 350, 20, colors[i]);
 			circle.setCursor(Cursor.HAND);
@@ -217,12 +230,69 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	private void drawSquares() {
 		int xPos = 200;
+		if (difficulty == 1) {
+			xPos += 150;
+		} else if (difficulty == 3) {
+			xPos -= 150;
+		}
 		for (int i = 0; i < circles.length; i++) {
 			Rectangle r = new Rectangle(xPos, 100, 60, 60);
 			r.setFill(Color.BLACK);
 			xPos += 100;
 			squares[i] = r;
 		}
+	}
+
+	private void drawDifficultyPage() {
+		Label menuMessage = new Label();
+		menuMessage.setText("Please choose a difficulty");
+		menuMessage.setId("message2");
+		Button button1 = new Button("Easy");
+		Button button2 = new Button("Medium");
+		Button button3 = new Button("Hard");
+		button1.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				difficulty = 1;
+				length = 3;
+				beginGame();
+			}
+		});
+		button2.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				difficulty = 2;
+				length = 6;
+				beginGame();
+			}
+		});
+		button3.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				difficulty = 3;
+				length = 9;
+				beginGame();
+			}
+		});
+		masterMind.getChildren().addAll(button1, button2, button3, menuMessage);
+		menuMessage.setTranslateX(200);
+		menuMessage.setTranslateY(100);
+		button1.setTranslateX(205);
+		button1.setTranslateY(250);
+		button2.setTranslateX(405);
+		button2.setTranslateY(250);
+		button3.setTranslateX(605);
+		button3.setTranslateY(250);
+	}
+
+	private void beginGame() {
+		masterMind.getChildren().clear();
+		circles = new Circle[length];
+		squares = new Rectangle[length];
+		startTimer();
+		resetStage(true);
+		drawStats();
+		gameLogic.createPuzzle(length);
 	}
 
 	@Override
@@ -234,8 +304,11 @@ public class MasterMind extends Puzzle implements ISolveable {
 				+ "top left corner\nof the screen will tell how many colors are "
 				+ "both correct and in the correct square, and will also tell"
 				+ " you how many colors are correct\nbut in the incorrect square."
-				+ "\n\nYou get 20 guesses to figure out which colors go in which "
-				+ "square to match the secret pattern.");
+				+ "\n\nEasy difficulty has 3 colors to guess, Medium has 6, and Hard has 9."
+				+ "\nWith each difficulty, you get 20 guesses to figure out which colors go in which "
+				+ "square to match the secret pattern."
+				+ "\n\nThe score is based on the amount of tries left after winning. If on medium difficulty, "
+				+ "the tries are doubled to produce the score. If on\nhard difficulty, the tries are tripled.");
 		instructions.setId("instructions");
 		instructions.setY(100);
 		instructions.setX(10);
@@ -255,11 +328,8 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	@Override
 	protected void setupPuzzlePane() {
-		startTimer();
 		masterMind = new Pane();
-		resetStage(true);
-		drawStats();
-		gameLogic.createPuzzle();
+		drawDifficultyPage();
 		puzzlePane.getChildren().add(masterMind);
 		puzzlePane.getStylesheets().add("views/MM.css");
 	}
