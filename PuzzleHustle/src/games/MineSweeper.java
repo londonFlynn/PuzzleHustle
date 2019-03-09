@@ -1,6 +1,5 @@
 package games;
 
-import java.util.HashMap;
 import java.util.Random;
 import games.SurroundingFlagsLogic;
 import interfaces.ISolveable;
@@ -40,7 +39,6 @@ public class MineSweeper extends Puzzle implements ISolveable {
 			+ "cell has been marked with F]\nRight Click: Mark a cell. \n[Blank > Flag (F) > Unsure (?)]"
 			+ "\nMiddle Click: Reveal all cells that are touching \nIF the number of Flags (F) surrounding is equal \nto the "
 			+ "number on the cell.");
-	private HashMap<Integer[], Cell> revealing = new HashMap<>();
 	private Label minesRemainingLabel = new Label();
 
 	public void run() {
@@ -183,20 +181,39 @@ public class MineSweeper extends Puzzle implements ISolveable {
 		Cell workingCell = getBoard()[x][y];
 		Button workingButton = getButtonBoard()[x][y];
 		
-		if (workingCell.getFlag() != Flag.FLAG && !workingCell.isRevealed()) {
-			if (workingCell.isMine()) {
+		if (!(workingCell.getFlag() == Flag.FLAG)) {
+			if (!workingCell.isRevealed()) {
 				workingCell.setRevealed(true);
-				workingButton.setText("M");
-			} else {
-				workingButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("revealed"), true);
-				String value = workingCell.getMinesTouching() > 0 ? workingCell.getMinesTouching() + "" : "";
-				workingButton.setText("" + value);
-				if (!workingCell.isRevealed()) {
-					setRevealedCells(getRevealedCells() + 1);
+				setRevealedCells(getRevealedCells() + 1);
+				if (workingCell.isMine()) {
+					workingCell.setRevealed(true);
+					workingButton.setText("M");
+					lose();
+				} else if (workingCell.getMinesTouching() == 0) {
+					workingButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("revealed"), true);
+					workingButton.setText("");				
+					revealSurrounding(x, y);
+					super.setScore(super.getScore() + 3);
+					if (getRevealedCells() + getTotalMines() == getBoard().length * getBoard()[0].length) {
+						pauseTimer();
+						Alert winner = new Alert(AlertType.CONFIRMATION, "You Win!", ButtonType.OK);
+						winner.showAndWait();
+						setSolved(true);
+						newGame();
+					}
+				} else {
+					workingButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("revealed"), true);
+					workingButton.setText("" + workingCell.getMinesTouching());
 					super.setScore(super.getScore() + 5);
+					if (getRevealedCells() + getTotalMines() == getBoard().length * getBoard()[0].length) {
+						pauseTimer();
+						Alert winner = new Alert(AlertType.CONFIRMATION, "You Win!", ButtonType.OK);
+						winner.showAndWait();
+						setSolved(true);
+						newGame();
+					}
 				}
-				workingCell.setRevealed(true);
-			} 
+			}
 		}
 	}
 
@@ -214,7 +231,7 @@ public class MineSweeper extends Puzzle implements ISolveable {
 				break;
 			case FLAG:
 				workingCell.setFlag(Flag.QUESTION);
-				workingButton.setText("Q");
+				workingButton.setText("?");
 				minesRemainingText = "Remaining Mines: " + (totalMines - --flaggedCells);
 				minesRemainingLabel.setText(minesRemainingText);
 				break;
@@ -308,34 +325,13 @@ public class MineSweeper extends Puzzle implements ISolveable {
 		root.setMaxSize(600, 600);
 		return root;
 	}
-	
-	private void revealZero(int x, int y) {
-		Integer[] temp = {x, y};
-		Cell workingCell = getBoard()[x][y];
-		revealing.put(temp, workingCell);
-		revealCell(x, y);
-		revealSurrounding(x, y);
-	}
-	
+		
 	private EventHandler<MouseEvent> initializedAction(int x, int y) {
 		return new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.getButton() == MouseButton.PRIMARY) {
-					if (getBoard()[x][y].isMine()) {
-						lose();
-					} else if (getBoard()[x][y].getMinesTouching() > 0){
-						revealCell(x, y);
-						if (getRevealedCells() + getTotalMines() == getBoard().length * getBoard()[0].length) {
-							pauseTimer();
-							Alert winner = new Alert(AlertType.CONFIRMATION, "You Win!", ButtonType.OK);
-							winner.showAndWait();
-							setSolved(true);
-							newPuzzle();
-						}
-					} else {
-						revealZero(x, y);
-					}
+					revealCell(x, y);
 				} else if (event.getButton() == MouseButton.SECONDARY) {
 					flagCell(x, y);
 				} else {
@@ -350,27 +346,28 @@ public class MineSweeper extends Puzzle implements ISolveable {
 		for (int i = 0; i < getBoard().length; i++) {
 			for (int j = 0; j< getBoard()[0].length; j++) {
 				if (getBoard()[i][j].isMine()) {
-					revealCell(i, j);
+					getBoard()[i][j].setRevealed(true);
+					getButtonBoard()[i][j].setText("M");
 				}
 			}
 		}
 		Alert gameOver = new Alert(AlertType.INFORMATION, "You've lost!", ButtonType.OK);
 		gameOver.showAndWait();
-		newPuzzle();
+		newGame();
 	}
 
 	private void newGame() {
 		// I am making this variable just to make the new game "refresh" look a bit cleaner.
-		GridPane cosmetic = getMineField();
-		setMineField(createMineFieldPane());
-		getRoot().getChildren().remove(cosmetic);
+//		GridPane cosmetic = getMineField();
+//		setMineField(createMineFieldPane());
+//		getRoot().getChildren().remove(cosmetic);
+//		getRoot().getChildren().add(getMineField());
+		getMineField().setDisable(true);
 		super.elapsedTimeTotal = 0;
 		super.startTime = 0;
 		super.setScore(0);
 		Label temp = (Label) display.getRightSidebar().getChildren().get(0);
 		temp.setText("Time: " + super.getTimerPresent(0));
-//		getRoot().getChildren().add(getMineField());
-		newPuzzle();
 	}
 	
 	public Cell[][] getBoard() {
