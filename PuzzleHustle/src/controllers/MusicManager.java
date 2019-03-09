@@ -4,6 +4,7 @@ import java.io.File;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class MusicManager {
 	private static MediaPlayer musicPlayer;
@@ -14,6 +15,11 @@ public class MusicManager {
 		String musicFile = "bensound-straight.mp3";
 		Media sound = new Media(new File(musicFile).toURI().toString());
 		musicPlayer = new MediaPlayer(sound);
+		musicPlayer.setOnEndOfMedia(new Runnable() {
+		       public void run() {
+		         musicPlayer.seek(Duration.ZERO);
+		       }
+		   });
 		musicPlayer.play();
 		musicPlayer.setVolume(.05);
 	}
