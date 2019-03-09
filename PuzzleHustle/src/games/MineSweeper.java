@@ -79,11 +79,11 @@ public class MineSweeper extends Puzzle implements ISolveable {
 			result[2] = 10;
 		} else if (dSResult.equals("Medium")) {
 			result[0] = 10;
-			result[1] = 10;
+			result[1] = 15;
 			result[2] = 20;
 		} else {
 			result[0] = 10;
-			result[1] = 10;
+			result[1] = 20;
 			result[2] = 40;
 		}
 		return result;
@@ -195,6 +195,9 @@ public class MineSweeper extends Puzzle implements ISolveable {
 					revealSurrounding(x, y);
 					super.setScore(super.getScore() + 3);
 					if (getRevealedCells() + getTotalMines() == getBoard().length * getBoard()[0].length) {
+						if (super.elapsedTimeTotal < 300000) {
+							super.setScore((float) (super.getScore() * 1.25));
+						}
 						pauseTimer();
 						Alert winner = new Alert(AlertType.CONFIRMATION, "You Win!", ButtonType.OK);
 						winner.showAndWait();
@@ -206,6 +209,9 @@ public class MineSweeper extends Puzzle implements ISolveable {
 					workingButton.setText("" + workingCell.getMinesTouching());
 					super.setScore(super.getScore() + 5);
 					if (getRevealedCells() + getTotalMines() == getBoard().length * getBoard()[0].length) {
+						if (super.elapsedTimeTotal < 300000) {
+							super.setScore((float) (super.getScore() * 1.25));
+						}
 						pauseTimer();
 						Alert winner = new Alert(AlertType.CONFIRMATION, "You Win!", ButtonType.OK);
 						winner.showAndWait();
@@ -258,22 +264,22 @@ public class MineSweeper extends Puzzle implements ISolveable {
 				if (x - 1 >= 0) {
 					revealCell(x-1, y-1);
 				}
-				if (x + 1 < getBoard()[0].length) {
+				if (x + 1 < getBoard().length) {
 					revealCell(x+1, y-1);
 				}
 			}
 			if (x - 1 >= 0) {
 				revealCell(x-1, y);
 			}
-			if (x + 1 < getBoard()[0].length) {
+			if (x + 1 < getBoard().length) {
 				revealCell(x+1, y);
 			}
-			if (y + 1 < getBoard().length) {
+			if (y + 1 < getBoard()[0].length) {
 				revealCell(x, y+1);
 				if (x - 1 >= 0) {
 					revealCell(x-1, y+1);
 				}
-				if (x + 1 < getBoard()[0].length) {
+				if (x + 1 < getBoard().length) {
 					revealCell(x+1, y+1);
 				}
 			}
