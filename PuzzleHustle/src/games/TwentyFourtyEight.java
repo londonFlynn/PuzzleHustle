@@ -2,7 +2,6 @@ package games;
 
 import java.util.Random;
 
-import controllers.MusicManager;
 import enums.PuzzleType;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
@@ -85,19 +84,19 @@ public class TwentyFourtyEight extends Puzzle {
 				if (e.getCode() == KeyCode.A) {
 					valueCheck = copiedValues();
 					swipeLeft();
-					
+					checkWin();
 				} else if (e.getCode() == KeyCode.D) {
 					valueCheck = copiedValues();
 					swipeRight();
-					
+					checkWin();
 				} else if (e.getCode() == KeyCode.W) {
 					valueCheck = copiedValues();
 					swipeUp();
-					
+					checkWin();
 				} else if (e.getCode() == KeyCode.S) {
 					valueCheck = copiedValues();
 					swipeDown();
-					
+					checkWin();
 				}
 			});
 		} catch (Exception e) {
@@ -120,6 +119,16 @@ public class TwentyFourtyEight extends Puzzle {
 		puzzlePane.getChildren().add(gameOver);
 	}
 
+	private void checkWin() {
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[i].length; j++) {
+				if (tiles[i][j].getValue() == 2048) {
+					setSolved(true);
+					return;
+				}
+			}
+		}
+	}
 	private void checkLoss() {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
