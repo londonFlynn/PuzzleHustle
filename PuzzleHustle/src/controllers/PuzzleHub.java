@@ -61,6 +61,19 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		setupUserFolder();
 		setupUsers();
 	}
+	private Button logoutButton() {
+		Button menu = new Button("Logout");
+		menu.setMinSize(100, 40);
+		menu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				MusicManager.playSquish();
+				setActiveUser(null);
+				showMainMenu();
+			}
+		});
+		return menu;
+	}
 
 	private void setupUsers() {
 		File folder = new File("users");
@@ -111,7 +124,7 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 		mainMenu = new VBox();
 		mainMenu.setAlignment(Pos.CENTER);
 		if (activeUser != null) {
-			mainMenu.getChildren().addAll(playButton(), userStatsButton());
+			mainMenu.getChildren().addAll(playButton(), userStatsButton(), logoutButton());
 			this.playButton();
 		}
 		mainMenu.getChildren().addAll(this.selectUserMenuButton());
@@ -180,6 +193,8 @@ public class PuzzleHub implements NewPuzzleSubscriber, SubscribesToExitable, IEx
 			activeUserLabel.setAlignment(Pos.CENTER);
 			activeUserLabel.getStyleClass().add("gameStats");
 			display.getRightSidebar().getChildren().add(activeUserLabel);
+		} else {
+			display.getRightSidebar().getChildren().clear();
 		}
 	}
 
