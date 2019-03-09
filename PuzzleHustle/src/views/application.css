@@ -47,9 +47,11 @@
 	-fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
-    -fx-min-height: 70px;
-    -fx-min-width: 150px;
+    -fx-min-height: 35px;
+    -fx-min-width: 200px;
     -fx-background-color: #00a5f0;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
 }
 .instructions{
 	-fx-font-size: 30pt;
@@ -84,6 +86,11 @@
 	-fx-padding: 0px;
 }
 
+.cell:pressed {
+	-fx-scale-x: 1;
+	-fx-scale-y: 1;
+}
+
 .cell:revealed {
 	-fx-background-color: lightgray;
 }
@@ -99,6 +106,7 @@
 
 .mineSweeperLabel {
 	-fx-background-color: #00a5f0;
+	-fx-font-weight: bold;
 	-fx-min-height: 30px;
 	-fx-padding: 5px;
 	-fx-border-width: 1px;
