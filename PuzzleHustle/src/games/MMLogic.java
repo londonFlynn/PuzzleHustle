@@ -31,7 +31,7 @@ public class MMLogic implements Serializable {
 		for (int i = 0; i < length; i++) {
 			int ranNum = rng.nextInt(length);
 			puzzle[i] = colors[ranNum];
-//			puzzle[i] = Color.RED;
+//			puzzle[0] = Color.ORANGE;
 		}
 		for (int i = 0; i < length; i++) {
 			System.out.println(colors[i]);
@@ -50,25 +50,25 @@ public class MMLogic implements Serializable {
 			rightSpots = 0;
 			boolean[] flags = new boolean[squares.length];
 			for (int i = 0; i < squares.length; i++) {
-				flags[i] = squares[i].getFill() == puzzle[i];
-			}
-			for (int i = 0; i < squares.length; i++) {
 				if (squares[i].getFill() == puzzle[i]) {
 					rightSpots++;
-				} else {
-					for (int j = 0; j < squares.length; j++) {
-						if (!flags[j] && squares[i].getFill() == puzzle[j]) {
-							rightColors++;
-							break;
-						}
+					flags[i] = true;
+				}
+			}
+			for (int i = 0; i < squares.length; i++) {
+				for (int j = 0; j < squares.length; j++) {
+					if (!flags[j] && squares[i].getFill() == puzzle[j]) {
+						rightColors++;
+						flags[j] = true;
+						break;
 					}
 				}
 			}
-			if (rightSpots == length) {
-				guessesLeft++;
-			}
-			guessesLeft--;
 		}
+		if (rightSpots == length) {
+			guessesLeft++;
+		}
+		guessesLeft--;
 	}
 
 	private void checkIfFullGuess(Rectangle[] squares) {
