@@ -1,5 +1,7 @@
 package games;
 
+import java.util.ArrayList;
+
 import enums.PuzzleType;
 import interfaces.ISolveable;
 import javafx.event.ActionEvent;
@@ -36,10 +38,16 @@ public class MasterMind extends Puzzle implements ISolveable {
 	private int difficulty = 1;
 	private int length = 1;
 	private Label endMessage = new Label();
+	private ArrayList<Rectangle[]> oldGuesses = new ArrayList<>();
 
 	private void drawStats() {
-		stats = new Text("Correct Color, Wrong Space: " + gameLogic.getRightColors() + "\nCorrect Color, Right Space: "
+		StringBuilder sb = new StringBuilder();
+		sb.append("Correct Color, Wrong Space: " + gameLogic.getRightColors() + "\nCorrect Color, Right Space: "
 				+ gameLogic.getRightSpots() + "\nGuesses Remaining: " + gameLogic.getGuessesLeft());
+		if (difficulty == 1) {
+			sb.append("\nPrevious Guesses:");
+		}
+		stats = new Text(sb.toString());
 		stats.setX(10);
 		stats.setY(20);
 		stats.setId("stats");
@@ -60,6 +68,9 @@ public class MasterMind extends Puzzle implements ISolveable {
 		drawSubmitButton();
 		drawCircles();
 		drawStats();
+		if (difficulty == 1) {
+			printOldGuesses();
+		}
 		if (drawSquares) {
 			drawSquares();
 		}
@@ -103,6 +114,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 		errorMessage.setY(250);
 		gameLogic.checkGuess(squares);
 		if (gameLogic.canCheck()) {
+			addToGuesses();
 			if (gameLogic.getRightSpots() == length) {
 				gameWon();
 			} else if (gameLogic.getGuessesLeft() == 0) {
@@ -113,6 +125,41 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 		} else {
 			errorMessage.setVisible(true);
+		}
+	}
+
+	private void addToGuesses() {
+		Rectangle[] temp = new Rectangle[squares.length];
+		int i = 0;
+		for (Rectangle r : squares) {
+			Rectangle tempSquare = new Rectangle(r.getWidth() / 2, r.getHeight() / 2);
+			System.out.println(tempSquare.getWidth());
+			tempSquare.setFill(r.getFill());
+			temp[i] = tempSquare;
+			i++;
+		}
+		oldGuesses.add(temp);
+	}
+
+	private void printOldGuesses() {
+		int count = 0;
+		int yPos = 90;
+		for (Rectangle[] guesses : oldGuesses) {
+			int xPos = 0;
+			if (count >= 11) {
+				xPos += 180;
+			}
+			if (count == 11) {
+				yPos = 90;
+			}
+			for (Rectangle r : guesses) {
+				r.setX(xPos);
+				r.setY(yPos);
+				xPos += 50;
+				masterMind.getChildren().add(r);
+			}
+			yPos += 40;
+			count++;
 		}
 	}
 
@@ -306,7 +353,7 @@ public class MasterMind extends Puzzle implements ISolveable {
 				+ " you how many colors are correct\nbut in the incorrect square."
 				+ "\n\nEasy difficulty has 3 colors to guess, Medium has 6, and Hard has 9."
 				+ "\nWith each difficulty, you get 20 guesses to figure out which colors go in which "
-				+ "square to match the secret pattern."
+				+ "square to match the secret pattern. If on easy difficulty, \nyou can see your previous guesses."
 				+ "\n\nThe score is based on the amount of tries left after winning. If on medium difficulty, "
 				+ "the tries are doubled to produce the score. If on\nhard difficulty, the tries are tripled.");
 		instructions.setId("instructions");
@@ -336,13 +383,14 @@ public class MasterMind extends Puzzle implements ISolveable {
 
 	@Override
 	public void showSolution() {
-		endMessage.setTranslateX(380);
 		endMessage.setTranslateY(250);
 		endMessage.setId("endMessage");
 		if (isWon) {
+			endMessage.setTranslateX(352.5);
 			endMessage.setText("You WON!!");
 		} else {
 			endMessage.setText("You Lose");
+			endMessage.setTranslateX(380);
 		}
 		masterMind.getChildren().clear();
 		drawSquares();
